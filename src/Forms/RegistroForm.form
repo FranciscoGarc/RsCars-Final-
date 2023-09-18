@@ -32,7 +32,7 @@
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagenes/bgapp.jpg"/>
+              <Image iconType="3" name="/imagenes/appbg.jpg"/>
             </Property>
           </Properties>
           <Constraints>
@@ -47,11 +47,11 @@
       <Properties>
         <Property name="kBorderRadius" type="int" value="0"/>
         <Property name="kEndColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="66" green="66" red="0" type="rgb"/>
-        </Property>
-        <Property name="kGradientFocus" type="int" value="50"/>
-        <Property name="kStartColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="66" green="ff" red="66" type="rgb"/>
+        </Property>
+        <Property name="kGradientFocus" type="int" value="90"/>
+        <Property name="kStartColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="61" green="bd" red="0" type="rgb"/>
         </Property>
       </Properties>
       <AuxValues>

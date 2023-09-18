@@ -258,8 +258,10 @@ public class pnlRecuperacionEmail extends javax.swing.JPanel {
 
         pBg.setkBorderRadius(0);
         pBg.setkEndColor(new java.awt.Color(102, 255, 102));
-        pBg.setkGradientFocus(50);
+        pBg.setkGradientFocus(90);
         pBg.setkStartColor(new java.awt.Color(0, 189, 97));
+
+        jPanel1.setBackground(new java.awt.Color(49, 62, 74));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Ingrese el codigo de verificacion");
@@ -333,7 +335,7 @@ public class pnlRecuperacionEmail extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(97, 97, 97)
                         .addComponent(btnVerificar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -399,20 +401,20 @@ public class pnlRecuperacionEmail extends javax.swing.JPanel {
             .addGroup(pBgLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(pBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pBgLayout.createSequentialGroup()
+                    .addGroup(pBgLayout.createSequentialGroup()
+                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(129, 129, 129)
+                        .addComponent(jLabel6))
+                    .addGroup(pBgLayout.createSequentialGroup()
+                        .addGap(63, 63, 63)
                         .addGroup(pBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pBgLayout.createSequentialGroup()
-                                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(129, 129, 129)
-                                .addComponent(jLabel6))
-                            .addGroup(pBgLayout.createSequentialGroup()
-                                .addGap(63, 63, 63)
-                                .addGroup(pBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel3))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(18, 18, 18))
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel3))))
+                .addContainerGap(103, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pBgLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
         );
         pBgLayout.setVerticalGroup(
             pBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -430,14 +432,14 @@ public class pnlRecuperacionEmail extends javax.swing.JPanel {
                     .addGroup(pBgLayout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(88, 88, 88)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addGap(108, 108, 108))
         );
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/bgapp.jpg"))); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/appbg.jpg"))); // NOI18N
         jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 420, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

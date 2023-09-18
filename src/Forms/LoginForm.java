@@ -89,7 +89,7 @@ public class LoginForm extends javax.swing.JPanel {
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/bgapp.jpg"))); // NOI18N
+        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/appbg.jpg"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -105,15 +105,14 @@ public class LoginForm extends javax.swing.JPanel {
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 420, 770));
 
         kGradientPanel1.setkBorderRadius(0);
-        kGradientPanel1.setkEndColor(new java.awt.Color(204, 255, 204));
+        kGradientPanel1.setkEndColor(new java.awt.Color(102, 255, 102));
         kGradientPanel1.setkGradientFocus(90);
         kGradientPanel1.setkStartColor(new java.awt.Color(0, 189, 97));
 
         pLogin2.setkBorderRadius(0);
-        pLogin2.setkEndColor(new java.awt.Color(255, 255, 204));
-        pLogin2.setkFillBackground(false);
+        pLogin2.setkEndColor(new java.awt.Color(49, 62, 74));
         pLogin2.setkGradientFocus(54);
-        pLogin2.setkStartColor(new java.awt.Color(204, 255, 255));
+        pLogin2.setkStartColor(new java.awt.Color(49, 62, 74));
 
         imgContr7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/padlock (2).png"))); // NOI18N
 

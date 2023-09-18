@@ -83,15 +83,15 @@ public class RegistroForm extends javax.swing.JPanel {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/bgapp.jpg"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/appbg.jpg"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 420, 770));
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 420, 770));
 
         pLogin.setkBorderRadius(0);
-        pLogin.setkEndColor(new java.awt.Color(0, 102, 102));
-        pLogin.setkGradientFocus(50);
-        pLogin.setkStartColor(new java.awt.Color(102, 255, 102));
+        pLogin.setkEndColor(new java.awt.Color(102, 255, 102));
+        pLogin.setkGradientFocus(90);
+        pLogin.setkStartColor(new java.awt.Color(0, 189, 97));
 
         cbLista.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbLista.addActionListener(new java.awt.event.ActionListener() {

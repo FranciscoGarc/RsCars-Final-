@@ -23,6 +23,7 @@ import Vista.ControlRecepcionista;
 import Vista.pnlContolMecanicos;
 import Vista.pnlControlClientes;
 import Vista.pnlHome;
+import Vista.pnlRegistrarVeh;
 
 /**
  *
@@ -78,7 +79,7 @@ public class MainForm extends JLayeredPane {
                 if (subIndex == 1) {
                     Application.showForm(new pnlControlClientes());
                 } else if (subIndex == 2) {
-                    //Application.showForm(new FormRead());
+                    Application.showForm(new pnlRegistrarVeh());
                 } else {
                     action.cancel();
                 }
