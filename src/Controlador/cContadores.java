@@ -46,13 +46,13 @@ public class cContadores implements ActionListener, MouseListener {
         this.vistaContadores.btnActualizar.addActionListener(this);
         this.vistaContadores.btnEliminar.addActionListener(this);
         this.mostrarDatosTabla = new MostrarDatosTabla();
-        //vistaClientes.txtName.setDocument(new Valida(30, "[a-zA-Z]*"));
-        //vistaClientes.txtApe.setDocument(new Valida(30, "[a-zA-Z]*"));
+        vistaContadores.txtName.setDocument(new Valida(30,  "[a-zA-Z áÁéÉíÍóÓúÚüÜ]*"));
+        vistaContadores.txtApe.setDocument(new Valida(30,  "[a-zA-Z áÁéÉíÍóÓúÚüÜ]*"));
         vistaContadores.txtUser.setDocument(new Valida(30, "[a-zA-Z0-9]*"));
-        vistaContadores.txtContra.setDocument(new Valida(8, "[a-zA-Z0-9]*"));
-        //vistaClientes.txtDirec.setDocument(new Valida(30, "[a-zA-Z0-9]*"));
-        //vistaClientes.txtTel.setDocument(new Valida(8, "[0-9]*"));
-        vistaContadores.txtDui.setDocument(new Valida(10, "[0-9]*"));
+        vistaContadores.txtContra.setDocument(new Valida(12, "[a-zA-Z0-9]*"));
+        vistaContadores.txtDirec.setDocument(new Valida(30,  "[a-zA-Z0-9 áÁéÉíÍóÓúÚüÜ]*"));
+        vistaContadores.txtTel.setDocument(new Valida(8, "[0-9]*"));
+        vistaContadores.txtDui.setDocument(new Valida(9, "[0-9]*"));
         this.vistaContadores.tbDatosCl.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

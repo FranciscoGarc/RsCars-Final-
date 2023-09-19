@@ -4,6 +4,8 @@
  */
 package Vista;
 
+import Controlador.cVehiculos;
+import Modelo.mVehiculos;
 import com.formdev.flatlaf.FlatClientProperties;
 
 /**
@@ -15,9 +17,16 @@ public class pnlRegistrarVeh extends javax.swing.JPanel {
     /**
      * Creates new form pnlRegistrarVeh
      */
+    
+    private mVehiculos modeloVehiculos;
+    private cVehiculos controladorVehiculos;
+    
     public pnlRegistrarVeh() {
         initComponents();
+        modeloVehiculos = new mVehiculos();
+        controladorVehiculos = new cVehiculos(modeloVehiculos, this);
         init();
+
     }
 
         private void init() {
@@ -40,6 +49,7 @@ public class pnlRegistrarVeh extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jProgressBar1 = new javax.swing.JProgressBar();
         pLogin = new com.k33ptoo.components.KGradientPanel();
         txtMarca = new javax.swing.JTextField();
         txtAno = new javax.swing.JTextField();
@@ -51,6 +61,7 @@ public class pnlRegistrarVeh extends javax.swing.JPanel {
         jLabel9 = new javax.swing.JLabel();
         txtSearch = new javax.swing.JTextField();
         btnRegistrar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -115,21 +126,26 @@ public class pnlRegistrarVeh extends javax.swing.JPanel {
         add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 440, 39));
 
         btnRegistrar.setText("Agregar vehiculo");
-        add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 190, 132, 41));
+        add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 130, 132, 41));
+
+        btnEliminar.setText("Eliminar vehiculo");
+        add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 230, 132, 41));
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnRegistrar;
+    public javax.swing.JButton btnEliminar;
+    public javax.swing.JButton btnRegistrar;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private com.k33ptoo.components.KGradientPanel pLogin;
-    private javax.swing.JTable tbVehi;
-    private javax.swing.JTextField txtAno;
-    private javax.swing.JTextField txtCliente;
-    private javax.swing.JTextField txtMarca;
-    private javax.swing.JTextField txtModelo;
-    private javax.swing.JTextField txtPlaca;
-    private javax.swing.JTextField txtSearch;
+    public javax.swing.JTable tbVehi;
+    public javax.swing.JTextField txtAno;
+    public javax.swing.JTextField txtCliente;
+    public javax.swing.JTextField txtMarca;
+    public javax.swing.JTextField txtModelo;
+    public javax.swing.JTextField txtPlaca;
+    public javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }

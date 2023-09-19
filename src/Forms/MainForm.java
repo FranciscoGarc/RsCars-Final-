@@ -20,6 +20,7 @@ import Menu.Admin.MenuAd;
 import Menu.Admin.MenuAction;
 import Vista.ControlContadores;
 import Vista.ControlRecepcionista;
+import Vista.pnlCitas;
 import Vista.pnlContolMecanicos;
 import Vista.pnlControlClientes;
 import Vista.pnlHome;
@@ -107,6 +108,8 @@ public class MainForm extends JLayeredPane {
                 } else {
                     action.cancel();
                 }
+            } else if (index == 5) {
+                Application.showForm(new pnlCitas());
             } else if (index == 8) {
                 Application.logout();
             } else {

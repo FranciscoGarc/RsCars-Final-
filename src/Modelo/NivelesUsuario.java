@@ -30,8 +30,8 @@ public class NivelesUsuario {
     }
     private int idTipo;
     private String tipo;
-    
-        public void traerIdDeTbTipo(mRegistro modeloUsuario, NivelesUsuario modeloNivelesUsuario) {
+
+    public void traerIdDeTbTipo(mRegistro modeloUsuario, NivelesUsuario modeloNivelesUsuario) {
         try {
             String query = "SELECT idtipo from tbTipoUsuarios  where tipo = ?";
             PreparedStatement addSeccion = conx.getConexion().prepareStatement(query);
@@ -51,18 +51,18 @@ public class NivelesUsuario {
     public void llenarComboBox(RegistroForm vistaRegistro) {
         vistaRegistro.cbLista.removeAllItems();
         try {
-            String query = "select tipo from tbTipoUsuarios where idTipo<5;";
+            String query = "select tipo from tbTipoUsuarios where idTipo<5 AND idTipo>1;";
 
             Statement statement = conx.getConexion().createStatement();
             ResultSet resultado = statement.executeQuery(query);
 
             while (resultado.next()) {
-              vistaRegistro.cbLista.addItem(resultado.getString("tipo"));   
+                vistaRegistro.cbLista.addItem(resultado.getString("tipo"));
             }
 
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
     }
-    
+
 }

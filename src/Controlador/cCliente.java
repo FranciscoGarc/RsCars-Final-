@@ -46,13 +46,13 @@ public class cCliente implements ActionListener, MouseListener {
         this.vistaClientes.btnActualizar.addActionListener(this);
         this.vistaClientes.btnEliminar.addActionListener(this);
         this.mostrarDatosTabla = new MostrarDatosTabla();
-        //vistaClientes.txtName.setDocument(new Valida(30, "[a-zA-Z]*"));
-        //vistaClientes.txtApe.setDocument(new Valida(30, "[a-zA-Z]*"));
+        vistaClientes.txtName.setDocument(new Valida(30, "[a-zA-Z ]*"));
+        vistaClientes.txtApe.setDocument(new Valida(30, "[a-zA-Z ]*"));
         vistaClientes.txtUser.setDocument(new Valida(30, "[a-zA-Z0-9]*"));
-        vistaClientes.txtContra.setDocument(new Valida(8, "[a-zA-Z0-9]*"));
-        //vistaClientes.txtDirec.setDocument(new Valida(30, "[a-zA-Z0-9]*"));
-        //vistaClientes.txtTel.setDocument(new Valida(8, "[0-9]*"));
-        vistaClientes.txtDui.setDocument(new Valida(10, "[0-9]*"));
+        vistaClientes.txtContra.setDocument(new Valida(12, "[a-zA-Z0-9]*"));
+        vistaClientes.txtDirec.setDocument(new Valida(30, "[a-zA-Z0-9 áÁéÉíÍóÓúÚüÜ]*"));
+        vistaClientes.txtTel.setDocument(new Valida(8, "[0-9]*"));
+        vistaClientes.txtDui.setDocument(new Valida(9, "[0-9]*"));
         this.vistaClientes.tbDatosCl.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -147,34 +147,11 @@ public class cCliente implements ActionListener, MouseListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        /*if (e.getSource() == vistaClientes.btnAgregarUsuario) {
-            int idTipoUsuario = 5; // Nivel de usuario fijo: 5 para Cliente
-            String usuario = vistaClientes.txtUser.getText();
-            String contra = vistaClientes.txtContra.getText();
-            String correo = vistaClientes.txtCorreo.getText();
-
-            if (usuario.isEmpty() || contra.isEmpty() || correo.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Llene todos los campos.");
-            } else {
-                modeloUsuario.setIdTipo(idTipoUsuario);
-                modeloUsuario.setUsuario(usuario);
-                modeloUsuario.setContra(contra);
-                modeloUsuario.setCorreo(correo);
-
-                if (modeloUsuario.AgregarUsuario(modeloUsuario)) {
-                    JOptionPane.showMessageDialog(vistaClientes, "Usuario registrado exitosamente.");
-                    cargarDatosTabla();
-                    limpiarCamposTexto();
-                } else {
-                    JOptionPane.showMessageDialog(vistaClientes, "Error al registrar el usuario.");
-                }
-            }
-        }*/
         if (e.getSource() == vistaClientes.btnRegistrar) {
             int filaSeleccionada = vistaClientes.tbDatosCl.getSelectedRow();
 
             if (filaSeleccionada >= 0) {
-                                int idUsuario = Integer.parseInt(vistaClientes.tbDatosCl.getValueAt(filaSeleccionada, 0).toString());
+                int idUsuario = Integer.parseInt(vistaClientes.tbDatosCl.getValueAt(filaSeleccionada, 0).toString());
                 String nombre = vistaClientes.txtName.getText();
                 String apellido = vistaClientes.txtApe.getText();
                 String telefono = vistaClientes.txtTel.getText();
@@ -199,12 +176,10 @@ public class cCliente implements ActionListener, MouseListener {
                         JOptionPane.showMessageDialog(vistaClientes, "Error al registrar el cliente.");
                     }
                 }
-            }
-            else{
+            } else {
                 Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Por favor, seleccione un usuario de la tabla");
             }
 
-            
         }
 
         if (e.getSource() == vistaClientes.btnEliminar) {

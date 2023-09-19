@@ -42,13 +42,13 @@ public class cMecanicos implements ActionListener, MouseListener {
         this.vistaMecanicos.btnActualizar.addActionListener(this);
         this.vistaMecanicos.btnEliminar.addActionListener(this);
         this.mostrarDatosTabla = new MostrarDatosTabla();
-        //vistaClientes.txtName.setDocument(new Valida(30, "[a-zA-Z]*"));
-        //vistaClientes.txtApe.setDocument(new Valida(30, "[a-zA-Z]*"));
+        vistaMecanicos.txtName.setDocument(new Valida(30, "[a-zA-Z áÁéÉíÍóÓúÚüÜ ]*"));
+        vistaMecanicos.txtApe.setDocument(new Valida(30,  "[a-zA-Z áÁéÉíÍóÓúÚüÜ ]*"));
         vistaMecanicos.txtUser.setDocument(new Valida(30, "[a-zA-Z0-9]*"));
-        vistaMecanicos.txtContra.setDocument(new Valida(8, "[a-zA-Z0-9]*"));
-        //vistaClientes.txtDirec.setDocument(new Valida(30, "[a-zA-Z0-9]*"));
-        //vistaClientes.txtTel.setDocument(new Valida(8, "[0-9]*"));
-        vistaMecanicos.txtDui.setDocument(new Valida(10, "[0-9]*"));
+        vistaMecanicos.txtContra.setDocument(new Valida(12, "[a-zA-Z0-9]*"));
+        vistaMecanicos.txtDirec.setDocument(new Valida(30, "[a-zA-Z0-9 áÁéÉíÍóÓúÚüÜ]*"));
+        vistaMecanicos.txtTel.setDocument(new Valida(8, "[0-9]*"));
+        vistaMecanicos.txtDui.setDocument(new Valida(9, "[0-9]*"));
         this.vistaMecanicos.tbDatosCl.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
