@@ -69,9 +69,9 @@ public class MainMeca extends JLayeredPane {
         menu.addMenuEvent((int index, int subIndex, MenuAction action) -> {
             // Application.mainForm.showForm(new DefaultForm("Form : " + index + " " + subIndex));
             if (index == 0) {
-                if (subIndex == 1) {
-                    //Application.showForm(new pnlControlClientes());
-                }
+                
+                    //Application.showFormMeca(new pnlControlClientes());
+                
             } else if (index == 1) {
                 if (subIndex == 1) {
                     //Application.showForm(new FormInbox());

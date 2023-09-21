@@ -37,6 +37,8 @@ public class MenuAd extends JPanel {
         {"~Otros~"},
         {"Proveedores"},
         {"Repuestos"},
+        {"~Otros~"},
+        {"Pagos"},
         {"~Cerrar sesion~"},
         {"Salir"}
     };

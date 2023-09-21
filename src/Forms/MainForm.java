@@ -24,6 +24,7 @@ import Vista.pnlCitas;
 import Vista.pnlContolMecanicos;
 import Vista.pnlControlClientes;
 import Vista.pnlHome;
+import Vista.pnlPagos;
 import Vista.pnlRegistrarVeh;
 
 /**
@@ -31,6 +32,8 @@ import Vista.pnlRegistrarVeh;
  * @author Raven
  */
 public class MainForm extends JLayeredPane {
+
+    private int idUsuario;
 
     public MainForm() {
         init();
@@ -86,7 +89,7 @@ public class MainForm extends JLayeredPane {
                 }
             } else if (index == 2) {
                 if (subIndex == 1) {
-                    Application.showForm(new pnlContolMecanicos());
+                    Application.showForm(new pnlContolMecanicos(getIdUsuario()));
                 } else if (subIndex == 2) {
                     //Application.showForm(new FormRead());
                 } else {
@@ -111,6 +114,8 @@ public class MainForm extends JLayeredPane {
             } else if (index == 5) {
                 Application.showForm(new pnlCitas());
             } else if (index == 8) {
+                Application.showForm(new pnlPagos());
+            } else if (index == 9) {
                 Application.logout();
             } else {
                 action.cancel();
@@ -149,6 +154,14 @@ public class MainForm extends JLayeredPane {
     private MenuAd menu;
     private JPanel panelBody;
     private JButton menuButton;
+
+    public void setIdUsuario(int idUser) {
+        this.idUsuario = idUser;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
 
     private class MainFormLayout implements LayoutManager {
 

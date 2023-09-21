@@ -45,7 +45,7 @@ public class cVehiculos implements ActionListener, MouseListener {
         this.vistaVeh.tbVehi.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                
+
             }
         });
         vistaVeh.txtSearch.getDocument().addDocumentListener(new DocumentListener() {
@@ -75,7 +75,7 @@ public class cVehiculos implements ActionListener, MouseListener {
 
     private void buscarDatos() {
         String textoBusqueda = vistaVeh.txtSearch.getText();
-        modeloVehiculos.buscarVehiculo(textoBusqueda,vistaVeh.tbVehi);
+        modeloVehiculos.buscarVehiculo(textoBusqueda, vistaVeh.tbVehi);
     }
 
     private void limpiarCamposTexto() {

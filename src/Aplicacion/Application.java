@@ -20,12 +20,15 @@ import raven.toast.Notifications;
  */
 public class Application extends javax.swing.JFrame {
 
+
+
     private static Application app;
     private final MainForm mainForm;
     private final MainMeca mainMeca;
     private final LoginForm loginForm;
     private final pnlRecuperacionEmail recup;
     private final RegistroForm registroForm;
+    
 
     public Application() {
         initComponents();
@@ -45,9 +48,15 @@ public class Application extends javax.swing.JFrame {
         app.mainForm.showForm(component);
     }
 
-    public static void login() {
+    public static void showFormMeca(Component component) {
+        component.applyComponentOrientation(app.getComponentOrientation());
+        app.mainMeca.showForm(component);
+    }
+
+    public static void login(int idUsers) {
         FlatAnimatedLafChange.showSnapshot();
         app.setContentPane(app.mainForm);
+        app.mainForm.setIdUsuario(idUsers);
         app.mainForm.applyComponentOrientation(app.getComponentOrientation());
         setSelectedMenu(0, 0);
         app.mainForm.hideMenu();

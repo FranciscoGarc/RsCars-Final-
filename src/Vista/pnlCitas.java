@@ -7,6 +7,7 @@ package Vista;
 import Controlador.cCitas;
 import Modelo.CbCitas;
 import Modelo.mCitas;
+import com.formdev.flatlaf.FlatClientProperties;
 
 /**
  *
@@ -28,9 +29,17 @@ public class pnlCitas extends javax.swing.JPanel {
         cbCitas.llenarComboBoxRe(this);
         cbCitas.llenarComboBoxSer(this);
         mCitas = new mCitas();
-        cCitas = new cCitas(mCitas, this);
+        cCitas = new cCitas(mCitas, this, cbCitas);
+        init();
     }
 
+        private void init() {
+
+        txtSearch.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Buscar cita");
+        txtPlaca.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Placa del vehiculo");
+        txtMecanico.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Usuario del mecanico");
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -52,7 +61,7 @@ public class pnlCitas extends javax.swing.JPanel {
         jLabel9 = new javax.swing.JLabel();
         txtSearch = new javax.swing.JTextField();
         btnRegistrar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
+        btnActua = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -60,6 +69,9 @@ public class pnlCitas extends javax.swing.JPanel {
         pLogin.setkStartColor(new java.awt.Color(0, 0, 0));
 
         date.setColorForeground(new java.awt.Color(255, 255, 255));
+        date.setColorSelForeground(new java.awt.Color(0, 0, 0));
+        date.setColorTextDiaActual(new java.awt.Color(0, 0, 0));
+        date.setName(""); // NOI18N
 
         cbServicio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -76,20 +88,20 @@ public class pnlCitas extends javax.swing.JPanel {
                 .addComponent(txtMecanico, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(167, 167, 167))
             .addGroup(pLoginLayout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addGroup(pLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pLoginLayout.createSequentialGroup()
+                .addGroup(pLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pLoginLayout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(cbServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Repuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(54, 54, 54)
+                        .addComponent(Estado, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pLoginLayout.createSequentialGroup()
+                        .addGap(43, 43, 43)
                         .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(txtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(26, Short.MAX_VALUE))
-                    .addGroup(pLoginLayout.createSequentialGroup()
-                        .addComponent(cbServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Repuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(81, 81, 81)
-                        .addComponent(Estado, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(41, 41, 41))))
+                        .addComponent(txtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         pLoginLayout.setVerticalGroup(
             pLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,15 +146,15 @@ public class pnlCitas extends javax.swing.JPanel {
         btnRegistrar.setText("Agregar cita");
         add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 153, 132, 41));
 
-        btnEliminar.setText("Actualizar cita");
-        add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 253, 132, 41));
+        btnActua.setText("Actualizar cita");
+        add(btnActua, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 253, 132, 41));
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JComboBox<String> Estado;
     public javax.swing.JComboBox<String> Repuesto;
-    public javax.swing.JButton btnEliminar;
+    public javax.swing.JButton btnActua;
     public javax.swing.JButton btnRegistrar;
     public javax.swing.JComboBox<String> cbServicio;
     public rojeru_san.componentes.RSDateChooser date;

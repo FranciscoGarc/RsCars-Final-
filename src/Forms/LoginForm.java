@@ -199,7 +199,7 @@ public class LoginForm extends javax.swing.JPanel {
         );
 
         jLabel15.setDisplayedMnemonic('B');
-        jLabel15.setFont(new java.awt.Font("Niagara Engraved", 0, 60)); // NOI18N
+        jLabel15.setFont(new java.awt.Font("Script MT Bold", 0, 48)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(0, 0, 0));
         jLabel15.setText("Bienvenido al sistema de RsCars");
 
@@ -208,21 +208,21 @@ public class LoginForm extends javax.swing.JPanel {
         kGradientPanel1Layout.setHorizontalGroup(
             kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                .addContainerGap(133, Short.MAX_VALUE)
+                .addContainerGap(95, Short.MAX_VALUE)
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel15)
-                        .addGap(144, 144, 144))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
                         .addComponent(pLogin2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(114, 114, 114))))
+                        .addGap(114, 114, 114))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel15)
+                        .addGap(57, 57, 57))))
         );
         kGradientPanel1Layout.setVerticalGroup(
             kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
-                .addGap(41, 41, 41)
+                .addGap(68, 68, 68)
                 .addComponent(jLabel15)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
                 .addComponent(pLogin2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(110, 110, 110))
         );
@@ -281,7 +281,7 @@ public class LoginForm extends javax.swing.JPanel {
                 if (idTipoUs == 1) {
                     idCuenta = rs.getInt("idUsuario");
                     limpiarCampos();
-                    Application.login();
+                    Application.login(idUsers);
                     Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Bienvenido al sistema");
                 }
                 if (idTipoUs == 2) {
@@ -293,11 +293,11 @@ public class LoginForm extends javax.swing.JPanel {
                 }
                 if (idTipoUs == 3) {
                     idCuenta = rs.getInt("idUsuario");
-
+                    Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Bienvenido contador");
                 }
                 if (idTipoUs == 4) {
                     idCuenta = rs.getInt("idUsuario");
-
+                    Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Bienvenido recepcionista");
                 }
 
                 rs.close();

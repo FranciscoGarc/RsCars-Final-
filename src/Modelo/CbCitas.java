@@ -60,15 +60,47 @@ public class CbCitas {
         this.Servicio = Servicio;
     }
 
-    public void traerIdDeTbTipo(mRegistro modeloUsuario, NivelesUsuario modeloNivelesUsuario) {
+    public void traerIdDeTbEstado(mCitas modeloCitas, CbCitas modeloCbCitas) {
         try {
-            String query = "SELECT idtipo from tbTipoUsuarios  where tipo = ?";
+            String query = "SELECT idEstado from tbEstadoCita  where estado = ?";
             PreparedStatement addSeccion = conx.getConexion().prepareStatement(query);
-            addSeccion.setString(1, modeloNivelesUsuario.getTipo());
+            addSeccion.setString(1, modeloCbCitas.getEstado());
             ResultSet resultado = addSeccion.executeQuery();
 
             while (resultado.next()) {
-                modeloUsuario.setIdTipo(resultado.getInt("idTipo"));
+                modeloCitas.setIdEstado(resultado.getInt("idEstado"));
+
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }
+    }
+
+    public void traerIdDeTbRepuesto(mCitas modeloCitas, CbCitas modeloCbCitas) {
+        try {
+            String query = "SELECT idRepuesto from tbRepuestos where descripción = ?";
+            PreparedStatement addSeccion = conx.getConexion().prepareStatement(query);
+            addSeccion.setString(1, modeloCbCitas.getRepuesto());
+            ResultSet resultado = addSeccion.executeQuery();
+
+            while (resultado.next()) {
+                modeloCitas.setIdRepuesto(resultado.getInt("idRepuesto"));
+
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }
+    }
+
+    public void traerIdDeTbServicio(mCitas modeloCitas, CbCitas modeloCbCitas) {
+        try {
+            String query = "SELECT idServicio from tbServicios where descripcion = ?";
+            PreparedStatement addSeccion = conx.getConexion().prepareStatement(query);
+            addSeccion.setString(1, modeloCbCitas.getServicio());
+            ResultSet resultado = addSeccion.executeQuery();
+
+            while (resultado.next()) {
+                modeloCitas.setIdServicio(resultado.getInt("idServicio"));
 
             }
         } catch (SQLException ex) {

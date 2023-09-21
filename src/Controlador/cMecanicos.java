@@ -4,6 +4,7 @@
  */
 package Controlador;
 
+import Forms.MainForm;
 import Modelo.MostrarDatosTabla;
 import Modelo.Valida;
 import Modelo.crypt;
@@ -37,13 +38,15 @@ public class cMecanicos implements ActionListener, MouseListener {
     public cMecanicos(pnlContolMecanicos vistaMecanicos, mMecanicos modeloMecanicos) {
         this.modeloMecanicos = modeloMecanicos;
         this.vistaMecanicos = vistaMecanicos;
+
         this.vistaMecanicos.btnRegistrar.addActionListener(this);
         this.vistaMecanicos.btnAgregarUsuario.addActionListener(this);
         this.vistaMecanicos.btnActualizar.addActionListener(this);
         this.vistaMecanicos.btnEliminar.addActionListener(this);
         this.mostrarDatosTabla = new MostrarDatosTabla();
+
         vistaMecanicos.txtName.setDocument(new Valida(30, "[a-zA-Z áÁéÉíÍóÓúÚüÜ ]*"));
-        vistaMecanicos.txtApe.setDocument(new Valida(30,  "[a-zA-Z áÁéÉíÍóÓúÚüÜ ]*"));
+        vistaMecanicos.txtApe.setDocument(new Valida(30, "[a-zA-Z áÁéÉíÍóÓúÚüÜ ]*"));
         vistaMecanicos.txtUser.setDocument(new Valida(30, "[a-zA-Z0-9]*"));
         vistaMecanicos.txtContra.setDocument(new Valida(12, "[a-zA-Z0-9]*"));
         vistaMecanicos.txtDirec.setDocument(new Valida(30, "[a-zA-Z0-9 áÁéÉíÍóÓúÚüÜ]*"));
@@ -74,6 +77,10 @@ public class cMecanicos implements ActionListener, MouseListener {
 
         cargarDatosTabla();
     }
+
+
+
+
 
     private boolean esNumero(String texto) {
         return texto.matches("\\d+");
@@ -196,7 +203,7 @@ public class cMecanicos implements ActionListener, MouseListener {
                         JOptionPane.showMessageDialog(vistaMecanicos, "Error al registrar el cliente.");
                     }
                 }
-            }else{
+            } else {
                 Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Por favor, seleccione un usuario de la tabla");
             }
 
