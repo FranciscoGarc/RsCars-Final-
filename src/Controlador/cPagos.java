@@ -21,6 +21,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -85,6 +86,25 @@ public class cPagos implements ActionListener, MouseListener {
         return idCita != -1; // Si idVehiculo es diferente a -1, se encontró un idVehiculo
     }
 
+        private int obtenerIdProvPorCode(String codigo) throws SQLException {
+        // Realiza la consulta SQL para obtener el idProveedor basado en el código
+        String query = "SELECT idCita FROM tbCitas WHERE idCita = ?";
+        PreparedStatement preparedStatement = conx.getConexion().prepareStatement(query);
+        preparedStatement.setString(1, codigo);
+
+        int idCita = -1;
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()) {
+            idCita = resultSet.getInt("idCita");
+        }
+
+        resultSet.close();
+        preparedStatement.close();
+
+        return idCita;
+    }
+    
     private void limpiarCamposTexto() {
         vistaPagos.txtIdCita.setText("");
         vistaPagos.txtDescripcion.setText("");
@@ -96,24 +116,25 @@ public class cPagos implements ActionListener, MouseListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == vistaPagos.btnRegistrar) {
-            int idCita = -1;
-            idCita = Integer.parseInt(vistaPagos.txtIdCita.getText());
-            String montoTexto = vistaPagos.txtMonto.getText();
-            BigDecimal montoPagado;
-            String Metodo = vistaPagos.cbIdMetodo.getSelectedItem().toString();
-            String descripcion = vistaPagos.txtDescripcion.getText();
-
-            Date fechaSeleccionada = vistaPagos.date.getDatoFecha();
-            // Verificar si la fecha seleccionada es nula
-            if (fechaSeleccionada == null) {
-                JOptionPane.showMessageDialog(vistaPagos, "La fecha seleccionada no puede ser nula.");
-                return; // Detener la operación si la fecha es nula
-            }
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String fechaFormateada = dateFormat.format(fechaSeleccionada);
+            try {
+                String idCita = vistaPagos.txtIdCita.getText();
+                String montoTexto = vistaPagos.txtMonto.getText();
+                BigDecimal montoPagado;
+                String Metodo = vistaPagos.cbIdMetodo.getSelectedItem().toString();
+                String descripcion = vistaPagos.txtDescripcion.getText();
+                
+                Date fechaSeleccionada = vistaPagos.date.getDatoFecha();
+                // Verificar si la fecha seleccionada es nula
+                if (fechaSeleccionada == null) {
+                    JOptionPane.showMessageDialog(vistaPagos, "La fecha seleccionada no puede ser nula.");
+                    return; // Detener la operación si la fecha es nula
+                }
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                String fechaFormateada = dateFormat.format(fechaSeleccionada);
                 montoPagado = new BigDecimal(montoTexto);
-
-                if (!validarIdCita(idCita)) {
+                
+                int idCitaa = obtenerIdProvPorCode(idCita);
+                if (!validarIdCita(idCitaa)) {
                     JOptionPane.showMessageDialog(vistaPagos, "No se encontro ninguna cita");
                     return;  // Terminar la función si la validación falla
                 }
@@ -125,7 +146,7 @@ public class cPagos implements ActionListener, MouseListener {
                 }
 
                 modeloCbPagos.setMetodo(Metodo);
-                modeloPagos.setIdCita(idCita);
+                modeloPagos.setIdCita(idCitaa);
                 modeloPagos.setMonto(montoPagado);
                 modeloPagos.setObservacion(descripcion);
                 modeloPagos.setFecha(fechaFormateada);
@@ -137,6 +158,9 @@ public class cPagos implements ActionListener, MouseListener {
                 JOptionPane.showMessageDialog(vistaPagos, "Pago registrado");
                 limpiarCamposTexto();
                 cargarDatosTabla();
+            } catch (SQLException ex) {
+                Logger.getLogger(cPagos.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

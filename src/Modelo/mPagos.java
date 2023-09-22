@@ -100,12 +100,12 @@ public class mPagos {
                 return false; // Hacemos que todas las celdas no sean editables
             }
         };
-        modelo.setColumnIdentifiers(new Object[]{"ID Cita", "Fecha y Hora", "Repuesto", "Servicio", "Costo", "Estado", "Placa Vehículo", "Monto Pagado", "Cambio", "Forma de Pago"});
+        modelo.setColumnIdentifiers(new Object[]{"ID Cita", "Fecha y Hora", "Repuesto", "Servicio", "PrecioCosto", "Estado", "Placa Vehículo", "Monto Pagado", "Cambio", "Forma de Pago"});
         tbDatosCl.setModel(modelo);
 
         try {
             Connection conexion = conx.getConexion();
-            String sql = "SELECT C.idCita, C.fechaHora, R.descripción AS Repuesto, S.descripcion AS Servicio, S.costo, E.estado, V.placa, P.montoPagado AS monto, (P.montoPagado - S.costo) AS cambio, FP.descripcion AS FormaPago "
+            String sql = "SELECT C.idCita, C.fechaHora, R.descripción AS Repuesto, S.descripcion AS Servicio, (R.precio + S.costo) AS PrecioCosto, E.estado, V.placa, P.montoPagado AS monto, CASE WHEN (P.montoPagado - (R.precio + S.costo)) < 0 THEN 0 ELSE (P.montoPagado - (R.precio + S.costo)) END AS cambio, FP.descripcion AS FormaPago "
                     + "FROM tbCitas C "
                     + "JOIN tbMecanicos M ON C.idMecanico = M.idMecanico "
                     + "LEFT JOIN tbRepuestos R ON C.idRepuesto = R.idRepuesto "
@@ -119,7 +119,7 @@ public class mPagos {
             PreparedStatement statement = conexion.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                modelo.addRow(new Object[]{rs.getInt("idCita"), rs.getString("fechaHora"), rs.getString("Repuesto"), rs.getString("Servicio"), rs.getDouble("costo"), rs.getString("estado"), rs.getString("placa"), rs.getDouble("monto"), rs.getDouble("cambio"), rs.getString("FormaPago")});
+                modelo.addRow(new Object[]{rs.getInt("idCita"), rs.getString("fechaHora"), rs.getString("Repuesto"), rs.getString("Servicio"), rs.getDouble("PrecioCosto"), rs.getString("estado"), rs.getString("placa"), rs.getDouble("monto"), rs.getDouble("cambio"), rs.getString("FormaPago")});
             }
             conexion.close();
         } catch (SQLException ex) {
@@ -139,7 +139,7 @@ public class mPagos {
 
         try {
             Connection conexion = conx.getConexion();
-            String sql = "SELECT C.idCita, C.fechaHora, R.descripción AS Repuesto, S.descripcion AS Servicio, S.costo, E.estado, V.placa, P.montoPagado AS monto, (P.montoPagado - S.costo) AS cambio, FP.descripcion AS FormaPago "
+            String sql = "SELECT C.idCita, C.fechaHora, R.descripción AS Repuesto, S.descripcion AS Servicio, (R.precio + S.costo) AS PrecioCosto, E.estado, V.placa, P.montoPagado AS monto, CASE WHEN (P.montoPagado - (R.precio + S.costo)) < 0 THEN 0 ELSE (P.montoPagado - (R.precio + S.costo)) END AS cambio, FP.descripcion AS FormaPago "
                     + "FROM tbCitas C "
                     + "JOIN tbMecanicos M ON C.idMecanico = M.idMecanico "
                     + "LEFT JOIN tbRepuestos R ON C.idRepuesto = R.idRepuesto "
@@ -149,7 +149,7 @@ public class mPagos {
                     + "JOIN tbEstadoCita E ON C.idEstado = E.idEstado "
                     + "JOIN tbPagos P ON C.idCita = P.idCita "
                     + "JOIN tbFormasPago FP ON P.idFormaPago = FP.idFormaPago "
-                    + "WHERE V.placa LIKE ? OR E.estado LIKE ? OR R.descripcion LIKE ? OR S.descripcion LIKE ? OR M.nombre LIKE ?";
+                    + "WHERE V.placa LIKE ? OR E.estado LIKE ? OR R.descripción LIKE ? OR S.descripcion LIKE ? OR M.nombre LIKE ?";
 
             PreparedStatement statement = conexion.prepareStatement(sql);
             for (int i = 1; i <= 5; i++) {
@@ -158,7 +158,7 @@ public class mPagos {
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                modelo.addRow(new Object[]{rs.getInt("idCita"), rs.getString("fechaHora"), rs.getString("Repuesto"), rs.getString("Servicio"), rs.getDouble("costo"), rs.getString("estado"), rs.getString("placa"), rs.getDouble("monto"), rs.getDouble("cambio"), rs.getString("FormaPago")});
+                modelo.addRow(new Object[]{rs.getInt("idCita"), rs.getString("fechaHora"), rs.getString("Repuesto"), rs.getString("Servicio"), rs.getDouble("PrecioCosto"), rs.getString("estado"), rs.getString("placa"), rs.getDouble("monto"), rs.getDouble("cambio"), rs.getString("FormaPago")});
             }
             conexion.close();
         } catch (SQLException ex) {

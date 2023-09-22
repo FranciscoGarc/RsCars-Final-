@@ -25,7 +25,9 @@ import Vista.pnlContolMecanicos;
 import Vista.pnlControlClientes;
 import Vista.pnlHome;
 import Vista.pnlPagos;
+import Vista.pnlProveedores;
 import Vista.pnlRegistrarVeh;
+import Vista.pnlRepuestos;
 
 /**
  *
@@ -113,6 +115,10 @@ public class MainForm extends JLayeredPane {
                 }
             } else if (index == 5) {
                 Application.showForm(new pnlCitas());
+            } else if (index == 6) {
+                Application.showForm(new pnlProveedores());
+            } else if (index == 7) {
+                Application.showForm(new pnlRepuestos());
             } else if (index == 8) {
                 Application.showForm(new pnlPagos());
             } else if (index == 9) {

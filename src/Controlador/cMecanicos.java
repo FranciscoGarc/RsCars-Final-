@@ -34,6 +34,7 @@ public class cMecanicos implements ActionListener, MouseListener {
     private mUsuario modeloUsuario;
     private pnlContolMecanicos vistaMecanicos;
     private MostrarDatosTabla mostrarDatosTabla;
+    private int idUser;
 
     public cMecanicos(pnlContolMecanicos vistaMecanicos, mMecanicos modeloMecanicos) {
         this.modeloMecanicos = modeloMecanicos;
@@ -44,6 +45,8 @@ public class cMecanicos implements ActionListener, MouseListener {
         this.vistaMecanicos.btnActualizar.addActionListener(this);
         this.vistaMecanicos.btnEliminar.addActionListener(this);
         this.mostrarDatosTabla = new MostrarDatosTabla();
+        this.idUser = vistaMecanicos.getIdUsuario();
+        setIdUsuario(idUser);
 
         vistaMecanicos.txtName.setDocument(new Valida(30, "[a-zA-Z áÁéÉíÍóÓúÚüÜ ]*"));
         vistaMecanicos.txtApe.setDocument(new Valida(30, "[a-zA-Z áÁéÉíÍóÓúÚüÜ ]*"));
@@ -78,9 +81,18 @@ public class cMecanicos implements ActionListener, MouseListener {
         cargarDatosTabla();
     }
 
+    private void actualizarLabelIDUser(int idUser) {
+        vistaMecanicos.labelIDUser.setText("ID del Usuario: " + idUser);
+        vistaMecanicos.labelIDUser.setVisible(false);
+    }
 
+    public void setIdUsuario(int idUser) {
+        this.idUser = idUser;
+    }
 
-
+    public int getIdUsuario() {
+        return idUser;
+    }
 
     private boolean esNumero(String texto) {
         return texto.matches("\\d+");
@@ -114,6 +126,8 @@ public class cMecanicos implements ActionListener, MouseListener {
         String textoBusqueda = vistaMecanicos.txtSearch.getText();
         mostrarDatosTabla.buscarDatosEnTablaMecanicos(vistaMecanicos.tbDatosCl, textoBusqueda);
     }
+    
+    
 
     private void mostrarDatosEnCamposTexto() {
         int filaSeleccionada = vistaMecanicos.tbDatosCl.getSelectedRow();
@@ -172,9 +186,13 @@ public class cMecanicos implements ActionListener, MouseListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == vistaMecanicos.btnRegistrar) {
             int filaSeleccionada = vistaMecanicos.tbDatosCl.getSelectedRow();
+            int idUser = getIdUsuario();
+            
+            actualizarLabelIDUser(idUser);
 
             if (filaSeleccionada >= 0) {
                 int idUsuario = Integer.parseInt(vistaMecanicos.tbDatosCl.getValueAt(filaSeleccionada, 0).toString());
+                int idUsere;
                 String nombre = vistaMecanicos.txtName.getText();
                 String apellido = vistaMecanicos.txtApe.getText();
                 String telefono = vistaMecanicos.txtTel.getText();

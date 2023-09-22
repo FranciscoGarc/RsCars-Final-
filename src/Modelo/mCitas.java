@@ -36,7 +36,7 @@ public class mCitas {
     public int getIdVehiculo() {
         return idVehiculo;
     }
-    
+
     public int getIdServicio() {
         return idServicio;
     }
@@ -44,7 +44,7 @@ public class mCitas {
     public void setIdServicio(int idServicio) {
         this.idServicio = idServicio;
     }
-    
+
     public void setIdVehiculo(int idVehiculo) {
         this.idVehiculo = idVehiculo;
     }
@@ -101,8 +101,8 @@ public class mCitas {
             return false;
         }
     }
-    
-        public boolean ActCi(mCitas citasModelo, CbCitas modeloCbCitas) {
+
+    public boolean ActCi(mCitas citasModelo, CbCitas modeloCbCitas) {
 
         try {
 
@@ -114,9 +114,14 @@ public class mCitas {
             actCliente.executeUpdate();
             return true;
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
-            return false;
+            if (ex.getErrorCode() == -999) {
+                System.out.println("Error: Stock insuficiente");
+            } else {
+                // Otro tipo de error
+                ex.printStackTrace();
+            }
         }
+        return false;
     }
 
     public void mostrarDatosEnTabla(JTable tbDatosCl) {

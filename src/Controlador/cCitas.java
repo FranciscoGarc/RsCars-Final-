@@ -162,23 +162,24 @@ public class cCitas implements ActionListener, MouseListener {
                     JOptionPane.showMessageDialog(vistaCitas, "La fecha seleccionada no es válida.");
                     return;  // Terminar la función si la validación falla
                 }
-
-                modeloCbCitas.setEstado(idEstado);
+                modeloCbCitas.setEstado(idEstado); // Error de stock insuficiente
+                // Otro tipo de error
                 modeloCbCitas.setRepuesto(idRepuesto);
                 modeloCbCitas.setServicio(idSer);
                 modeloCitas.setFecha(fechaFormateada);
                 modeloCitas.setIdMecanico(idMecanico);
                 modeloCitas.setIdVehiculo(idVehiculo);
-
                 modeloCbCitas.traerIdDeTbServicio(modeloCitas, modeloCbCitas);
                 modeloCbCitas.traerIdDeTbRepuesto(modeloCitas, modeloCbCitas);
                 modeloCbCitas.traerIdDeTbEstado(modeloCitas, modeloCbCitas);
 
-                modeloCitas.AgCi(modeloCitas, modeloCbCitas);
-
-                JOptionPane.showMessageDialog(vistaCitas, "Cita registrada");
-                limpiarCamposTexto();
-                cargarDatosTabla();
+                if (modeloCitas.AgCi(modeloCitas, modeloCbCitas)) {
+                    JOptionPane.showMessageDialog(vistaCitas, "Cita registrada");
+                    limpiarCamposTexto();
+                    cargarDatosTabla();
+                } else {
+                    Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Stock insuficiente");
+                }
 
             } catch (SQLException ex) {
                 Logger.getLogger(cCitas.class.getName()).log(Level.SEVERE, null, ex);
