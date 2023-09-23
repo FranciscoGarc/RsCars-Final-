@@ -279,24 +279,24 @@ public class LoginForm extends javax.swing.JPanel {
 
             if (rs.next()) {
                 if (idTipoUs == 1) {
-                    idCuenta = rs.getInt("idUsuario");
                     limpiarCampos();
-                    Application.login(idUsers);
+                    Application.login(idUsers, idTipoUs);
                     Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Bienvenido al sistema");
                 }
                 if (idTipoUs == 2) {
-                    idCuenta = rs.getInt("idUsuario");
                     limpiarCampos();
-                    Application.loginMeca();
+                    Application.loginMeca(idUsers, idTipoUs);
                     Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Bienvenido al sistema");
 
                 }
                 if (idTipoUs == 3) {
-                    idCuenta = rs.getInt("idUsuario");
+                    limpiarCampos();
+                    Application.loginCont(idUsers, idTipoUs);
                     Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Bienvenido contador");
                 }
                 if (idTipoUs == 4) {
-                    idCuenta = rs.getInt("idUsuario");
+                    limpiarCampos();
+                    Application.loginRecep(idUsers, idTipoUs);
                     Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Bienvenido recepcionista");
                 }
 

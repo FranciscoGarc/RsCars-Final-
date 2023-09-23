@@ -16,10 +16,9 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import Aplicacion.Application;
-import Menu.Meca.MenuMeca;
-import Menu.Meca.MenuAction;
+import Menu.Recep.MenuRecep;
+import Menu.Recep.MenuAction;
 import Vista.pnlCitas;
-import Vista.pnlContolMecanicos;
 import Vista.pnlControlClientes;
 import Vista.pnlHome;
 import Vista.pnlRegistrarVeh;
@@ -28,19 +27,19 @@ import Vista.pnlRegistrarVeh;
  *
  * @author Raven
  */
-public class MainMeca extends JLayeredPane {
+public class MainRecep extends JLayeredPane {
 
     private int idUsuario;
     private int idTipoUser;
 
-    public MainMeca() {
+    public MainRecep() {
         init();
     }
 
     private void init() {
         setBorder(new EmptyBorder(5, 5, 5, 5));
         setLayout(new MainFormLayout());
-        menu = new MenuMeca();
+        menu = new MenuRecep();
         panelBody = new JPanel(new BorderLayout());
         initMenuArrowIcon();
         menuButton.putClientProperty(FlatClientProperties.STYLE, ""
@@ -76,13 +75,13 @@ public class MainMeca extends JLayeredPane {
         menu.addMenuEvent((int index, int subIndex, MenuAction action) -> {
             // Application.mainForm.showForm(new DefaultForm("Form : " + index + " " + subIndex));
             if (index == 0) {
-                Application.showFormMeca(new pnlHome());
+                Application.showFormRecep(new pnlHome());
             } else if (index == 1) {
-                Application.showFormMeca(new pnlControlClientes());
+                Application.showFormRecep(new pnlControlClientes());
             } else if (index == 2) {
-                Application.showFormMeca(new pnlRegistrarVeh());
+                Application.showFormRecep(new pnlRegistrarVeh());
             } else if (index == 3) {
-                Application.showFormMeca(new pnlCitas());
+                Application.showFormRecep(new pnlCitas());
             } else if (index == 4) {
                 Application.logout();
             } else {
@@ -118,7 +117,7 @@ public class MainMeca extends JLayeredPane {
         menu.setSelectedMenu(index, subIndex);
     }
 
-    private MenuMeca menu;
+    private MenuRecep menu;
     private JPanel panelBody;
     private JButton menuButton;
 

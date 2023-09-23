@@ -22,7 +22,7 @@ import org.netbeans.lib.awtextra.AbsoluteConstraints;
 public class vDashboard extends javax.swing.JFrame {
 int xMouse, yMouse;
 
-private int idUser;
+//private int idUser;
     /**
      * Creates new form vDashboard
      */
@@ -313,7 +313,7 @@ private int idUser;
     }//GEN-LAST:event_kButton9MouseClicked
 
     private void kButton7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_kButton7MouseClicked
-        ShowJPanel(new pnlContolMecanicos(idUser));
+        //ShowJPanel(new pnlContolMecanicos(idUser));
     }//GEN-LAST:event_kButton7MouseClicked
 
     private void kButton11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_kButton11MouseClicked

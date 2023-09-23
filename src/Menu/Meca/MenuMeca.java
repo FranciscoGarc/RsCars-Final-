@@ -25,20 +25,15 @@ import Menu.Modo.Meca.ToolBarAccentColor;
 public class MenuMeca extends JPanel {
 
     private final String menuItems[][] = {
-        {"~MECANICOS~"},
-        {"Dashboard"},
-        {"~WEB APP~"},
-        {"Email", "Inbox", "Read", "Compost"},
-        {"Chat"},
-        {"Calendar"},
-        {"~COMPONENT~"},
-        {"Advanced UI", "Cropper", "Owl Carousel", "Sweet Alert"},
-        {"Forms", "Basic Elements", "Advanced Elements", "SEditors", "Wizard"},
-        {"~OTHER~"},
-        {"Charts", "Apex", "Flot", "Peity", "Sparkline"},
-        {"Icons", "Feather Icons", "Flag Icons", "Mdi Icons"},
-        {"Special Pages", "Blank page", "Faq", "Invoice", "Profile", "Pricing", "Timeline"},
-        {"Logout"}
+        {"~Home~"},
+        {"Inicio"},
+        {"~Clientes~"},
+        {"Vista de clientes"},
+        {"Vista de vehiculos"},
+        {"~Citas~"},
+        {"Citas a su nombre"},
+        {"~Cerrar sesion~"},
+        {"Salir"}
     };
 
     public boolean isMenuFull() {

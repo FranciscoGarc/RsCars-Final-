@@ -36,6 +36,7 @@ import Vista.pnlRepuestos;
 public class MainForm extends JLayeredPane {
 
     private int idUsuario;
+    private int idTipoUser;
 
     public MainForm() {
         init();
@@ -78,7 +79,6 @@ public class MainForm extends JLayeredPane {
 
     private void initMenuEvent() {
         menu.addMenuEvent((int index, int subIndex, MenuAction action) -> {
-            // Application.mainForm.showForm(new DefaultForm("Form : " + index + " " + subIndex));
             if (index == 0) {
                 Application.showForm(new pnlHome());
             } else if (index == 1) {
@@ -167,6 +167,14 @@ public class MainForm extends JLayeredPane {
 
     public int getIdUsuario() {
         return idUsuario;
+    }
+
+    public void setIdTipoUser(int idTipoUser) {
+        this.idTipoUser = idTipoUser;
+    }
+
+    public int getIdTipoUser() {
+        return idTipoUser;
     }
 
     private class MainFormLayout implements LayoutManager {

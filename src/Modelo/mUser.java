@@ -58,9 +58,9 @@ public class mUser {
             if (idTipoU == 4) {
                 cm = "SELECT * FROM tbRecepcionistas WHERE idUsuario = ?;";
             }
-            PreparedStatement PreparedStatements = conex.prepareStatement(cm);
-            PreparedStatements.setInt(1, idUser);
-            ResultSet resultSet = PreparedStatements.executeQuery();
+            PreparedStatement preparedStatements = conex.prepareStatement(cm);
+            preparedStatements.setInt(1, idUser);
+            ResultSet resultSet = preparedStatements.executeQuery();
             return resultSet;
 
         } catch (SQLException e) {

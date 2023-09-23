@@ -25,20 +25,17 @@ import Menu.Modo.Cont.ToolBarAccentColor;
 public class MenuCont extends JPanel {
 
     private final String menuItems[][] = {
-        {"~MAIN~"},
-        {"Dashboard"},
-        {"~WEB APP~"},
-        {"Email", "Inbox", "Read", "Compost"},
-        {"Chat"},
-        {"Calendar"},
-        {"~COMPONENT~"},
-        {"Advanced UI", "Cropper", "Owl Carousel", "Sweet Alert"},
-        {"Forms", "Basic Elements", "Advanced Elements", "SEditors", "Wizard"},
-        {"~OTHER~"},
-        {"Charts", "Apex", "Flot", "Peity", "Sparkline"},
-        {"Icons", "Feather Icons", "Flag Icons", "Mdi Icons"},
-        {"Special Pages", "Blank page", "Faq", "Invoice", "Profile", "Pricing", "Timeline"},
-        {"Logout"}
+        {"~Home~"},
+        {"Inicio"},
+        {"~Citas~"},
+        {"Vista de citas"},
+        {"~Pagos~"},
+        {"Pagos"},
+        {"~Proveedores~"},
+        {"Proveedores"},
+        {"Repuestos"},
+        {"~Cerrar sesion~"},
+        {"Salir"}
     };
 
     public boolean isMenuFull() {
@@ -65,7 +62,7 @@ public class MenuCont extends JPanel {
 
     private final List<MenuEvent> events = new ArrayList<>();
     private boolean menuFull = true;
-    private final String headerName = "Raven Channel";
+    private final String headerName = "RsCars";
 
     protected final boolean hideMenuTitleOnMinimum = true;
     protected final int menuTitleLeftInset = 5;

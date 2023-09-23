@@ -232,12 +232,12 @@ int xMouse, yMouse;
 
     private void kButton6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_kButton6MouseClicked
         // TODO add your handling code here:
-        ShowJPanel(new pnlRegistrarCl());
+        //ShowJPanel(new pnlRegistrarCl());
     }//GEN-LAST:event_kButton6MouseClicked
 
     private void kButton7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_kButton7MouseClicked
         // TODO add your handling code here:
-        ShowJPanel(new pnlRegistrarVeh());
+        //ShowJPanel(new pnlRegistrarVeh());
     }//GEN-LAST:event_kButton7MouseClicked
 
     private void kButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton2ActionPerformed
