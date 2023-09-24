@@ -47,6 +47,9 @@ public class cPagos implements ActionListener, MouseListener {
         this.vistaPagos = vistPagos;
         this.modeloCbPagos = modeCbPagos;
         this.vistaPagos.btnRegistrar.addActionListener(this);
+        vistaPagos.txtIdCita.setDocument(new Valida(4, "[0-9]*"));
+        vistaPagos.txtMonto.setDocument(new Valida(8, "[0-9].*"));
+        vistaPagos.txtDescripcion.setDocument(new Valida(20, "[a-zA-Z]*"));
         vistaPagos.txtSearch.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -86,7 +89,7 @@ public class cPagos implements ActionListener, MouseListener {
         return idCita != -1; // Si idVehiculo es diferente a -1, se encontró un idVehiculo
     }
 
-        private int obtenerIdProvPorCode(String codigo) throws SQLException {
+    private int obtenerIdProvPorCode(String codigo) throws SQLException {
         // Realiza la consulta SQL para obtener el idProveedor basado en el código
         String query = "SELECT idCita FROM tbCitas WHERE idCita = ?";
         PreparedStatement preparedStatement = conx.getConexion().prepareStatement(query);
@@ -104,7 +107,7 @@ public class cPagos implements ActionListener, MouseListener {
 
         return idCita;
     }
-    
+
     private void limpiarCamposTexto() {
         vistaPagos.txtIdCita.setText("");
         vistaPagos.txtDescripcion.setText("");
@@ -122,8 +125,21 @@ public class cPagos implements ActionListener, MouseListener {
                 BigDecimal montoPagado;
                 String Metodo = vistaPagos.cbIdMetodo.getSelectedItem().toString();
                 String descripcion = vistaPagos.txtDescripcion.getText();
-                
+
                 Date fechaSeleccionada = vistaPagos.date.getDatoFecha();
+
+                if (idCita.isEmpty() || montoTexto.isEmpty() || Metodo.isEmpty() || descripcion.isEmpty() || fechaSeleccionada == null) {
+                    JOptionPane.showMessageDialog(vistaPagos, "Todos los campos deben estar llenos.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return; // Terminar la función si hay campos vacíos
+                }
+
+                try {
+                    montoPagado = new BigDecimal(montoTexto);
+                } catch (NumberFormatException ec) {
+                    JOptionPane.showMessageDialog(vistaPagos, "El monto ingresado no es válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return; // Terminar la función si el monto no es válido
+                }
+
                 // Verificar si la fecha seleccionada es nula
                 if (fechaSeleccionada == null) {
                     JOptionPane.showMessageDialog(vistaPagos, "La fecha seleccionada no puede ser nula.");
@@ -132,7 +148,7 @@ public class cPagos implements ActionListener, MouseListener {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 String fechaFormateada = dateFormat.format(fechaSeleccionada);
                 montoPagado = new BigDecimal(montoTexto);
-                
+
                 int idCitaa = obtenerIdProvPorCode(idCita);
                 if (!validarIdCita(idCitaa)) {
                     JOptionPane.showMessageDialog(vistaPagos, "No se encontro ninguna cita");
@@ -153,11 +169,14 @@ public class cPagos implements ActionListener, MouseListener {
 
                 modeloCbPagos.traerIdDeTbMetodos(modeloPagos, modeloCbPagos);
 
-                modeloPagos.AgPa(modeloPagos, modeloCbPagos);
+                if (modeloPagos.AgPa(modeloPagos, modeloCbPagos)) {
+                    JOptionPane.showMessageDialog(vistaPagos, "Pago registrado");
+                    limpiarCamposTexto();
+                    cargarDatosTabla();
+                } else {
+                    JOptionPane.showMessageDialog(vistaPagos, "Error al registrar el pago");
+                }
 
-                JOptionPane.showMessageDialog(vistaPagos, "Pago registrado");
-                limpiarCamposTexto();
-                cargarDatosTabla();
             } catch (SQLException ex) {
                 Logger.getLogger(cPagos.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -27,6 +27,8 @@ import Vista.pnlHome;
 import Vista.pnlPagos;
 import Vista.pnlProveedores;
 import Vista.pnlRegistrarVeh;
+import Vista.pnlReporteClienPa;
+import Vista.pnlReporteCliente;
 import Vista.pnlRepuestos;
 
 /**
@@ -83,38 +85,36 @@ public class MainForm extends JLayeredPane {
                 Application.showForm(new pnlHome());
             } else if (index == 1) {
                 if (subIndex == 1) {
-                    Application.showForm(new pnlControlClientes());
+                    Application.showForm(new pnlControlClientes(getIdUsuario(), getIdTipoUser()));
                 } else if (subIndex == 2) {
                     Application.showForm(new pnlRegistrarVeh());
+                } else if (subIndex == 3) {
+                    Application.showForm(new pnlReporteCliente());
+                } else if (subIndex == 4) {
+                    Application.showForm(new pnlReporteClienPa());
                 } else {
                     action.cancel();
                 }
             } else if (index == 2) {
                 if (subIndex == 1) {
-                    Application.showForm(new pnlContolMecanicos(getIdUsuario()));
-                } else if (subIndex == 2) {
-                    //Application.showForm(new FormRead());
+                    Application.showForm(new pnlContolMecanicos(getIdUsuario(), getIdTipoUser()));
                 } else {
                     action.cancel();
                 }
             } else if (index == 3) {
                 if (subIndex == 1) {
                     Application.showForm(new ControlContadores());
-                } else if (subIndex == 2) {
-                    //Application.showForm(new FormRead());
                 } else {
                     action.cancel();
                 }
             } else if (index == 4) {
                 if (subIndex == 1) {
                     Application.showForm(new ControlRecepcionista());
-                } else if (subIndex == 2) {
-                    //Application.showForm(new FormRead());
                 } else {
                     action.cancel();
                 }
             } else if (index == 5) {
-                Application.showForm(new pnlCitas());
+                Application.showForm(new pnlCitas(getIdUsuario(), getIdTipoUser()));
             } else if (index == 6) {
                 Application.showForm(new pnlProveedores());
             } else if (index == 7) {

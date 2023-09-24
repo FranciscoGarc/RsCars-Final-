@@ -120,10 +120,9 @@ public class pnlRegistrarVeh extends javax.swing.JPanel {
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, 780, 150));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Buscar:");
-        add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, -1));
-        add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 440, 39));
+        add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
+        add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, 440, 39));
 
         btnRegistrar.setText("Agregar vehiculo");
         add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 130, 132, 41));

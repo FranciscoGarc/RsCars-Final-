@@ -39,7 +39,10 @@ public class cProveedores implements ActionListener, MouseListener {
         this.vistaProveedores = vistaProveedores;
         this.vistaProveedores.btnRegistrar.addActionListener(this);
         this.vistaProveedores.btnEliminar.addActionListener(this);
-        this.vistaProveedores.btnActualizar.addActionListener(this);
+        vistaProveedores.txtCode.setDocument(new Valida(4, "[0-9]*"));
+        vistaProveedores.txtTelefono.setDocument(new Valida(8, "[0-9]*"));
+        vistaProveedores.txtName.setDocument(new Valida(30, "[a-zA-Z]*"));
+
         vistaProveedores.txtSearch.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -77,21 +80,46 @@ public class cProveedores implements ActionListener, MouseListener {
         vistaProveedores.txtTelefono.setText("");
     }
 
+    private boolean isValidEmail(String email) {
+        String allowedPattern = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        return email.matches(allowedPattern);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == vistaProveedores.btnRegistrar) {
+
+            if (vistaProveedores.txtCode.getText().length() < 1) {
+                JOptionPane.showMessageDialog(vistaProveedores, "Campos vacios", "Error", JOptionPane.ERROR_MESSAGE);
+                return; // Terminar la función si hay campos vacíos
+            }
+
             String Nombre = vistaProveedores.txtName.getText();
             String Telefono = vistaProveedores.txtTelefono.getText();
             String Coreeo = vistaProveedores.txtTelefono.getText();
+            if (!isValidEmail(Coreeo)) {
+                JOptionPane.showMessageDialog(vistaProveedores, "Ingrese un correo valido", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             int code = Integer.parseInt(vistaProveedores.txtCode.getText());
+
+            if (Nombre.isEmpty() || Telefono.isEmpty() || Coreeo.isEmpty()) {
+                JOptionPane.showMessageDialog(vistaProveedores, "Todos los campos deben estar llenos.", "Error", JOptionPane.ERROR_MESSAGE);
+                return; // Terminar la función si hay campos vacíos
+            }
+
             modeloProveedores.setNombre(Nombre);
             modeloProveedores.setTelefono(Telefono);
             modeloProveedores.setCorreo(Coreeo);
             modeloProveedores.setCodigo(code);
-            modeloProveedores.AgPro(modeloProveedores);
-            JOptionPane.showMessageDialog(vistaProveedores, "Proveedor registrado");
-            limpiarCamposTexto();
-            cargarDatosTabla();
+            if (modeloProveedores.AgPro(modeloProveedores)) {
+                JOptionPane.showMessageDialog(vistaProveedores, "Proveedor registrado");
+                limpiarCamposTexto();
+                cargarDatosTabla();
+            } else {
+                JOptionPane.showMessageDialog(vistaProveedores, "Error");
+            }
 
         }
         if (e.getSource() == vistaProveedores.btnEliminar) {
@@ -113,28 +141,28 @@ public class cProveedores implements ActionListener, MouseListener {
         }
     }
 
-@Override
-public void mouseClicked(MouseEvent e) {
+    @Override
+    public void mouseClicked(MouseEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-public void mousePressed(MouseEvent e) {
+    public void mousePressed(MouseEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-public void mouseReleased(MouseEvent e) {
+    public void mouseReleased(MouseEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-public void mouseEntered(MouseEvent e) {
+    public void mouseEntered(MouseEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-public void mouseExited(MouseEvent e) {
+    public void mouseExited(MouseEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

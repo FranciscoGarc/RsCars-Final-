@@ -99,10 +99,12 @@ public class cRegistro implements ActionListener {
                         // Aquí puedes llamar a la función que genera el error
                         modelNivelesUsuario.traerIdDeTbTipo(modeloUsuario, modelNivelesUsuario);
 
-                        modeloUsuario.AgregarUsuarioR(modeloUsuario, modelNivelesUsuario);
-
-                        Notifications.getInstance().show(Notifications.Type.INFO, Notifications.Location.TOP_CENTER, "Ha sido registrado exitosamente");
-                        limpiarCamposTextoUsuario();
+                        if (modeloUsuario.AgregarUsuarioR(modeloUsuario, modelNivelesUsuario)) {
+                            Notifications.getInstance().show(Notifications.Type.INFO, Notifications.Location.TOP_CENTER, "Ha sido registrado exitosamente");
+                            limpiarCamposTextoUsuario();
+                        }else{
+                            Notifications.getInstance().show(Notifications.Type.INFO, Notifications.Location.TOP_CENTER, "Ha ocurrido un error");
+                        }
 
                     }
 

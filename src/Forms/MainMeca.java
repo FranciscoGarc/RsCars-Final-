@@ -78,11 +78,11 @@ public class MainMeca extends JLayeredPane {
             if (index == 0) {
                 Application.showFormMeca(new pnlHome());
             } else if (index == 1) {
-                Application.showFormMeca(new pnlControlClientes());
+                Application.showFormMeca(new pnlControlClientes(getIdUsuario(),getIdTipoUser()));
             } else if (index == 2) {
                 Application.showFormMeca(new pnlRegistrarVeh());
             } else if (index == 3) {
-                Application.showFormMeca(new pnlCitas());
+                Application.showFormMeca(new pnlCitas(getIdUsuario(),getIdTipoUser()));
             } else if (index == 4) {
                 Application.logout();
             } else {

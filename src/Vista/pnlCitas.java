@@ -18,28 +18,96 @@ public class pnlCitas extends javax.swing.JPanel {
     private CbCitas cbCitas;
     private mCitas mCitas;
     private cCitas cCitas;
-    
+
+    private int idUser;
+    private int idTipoUser;
+
     /**
      * Creates new form pnlCitas
      */
-    public pnlCitas() {
+    public pnlCitas(int idUser, int idTipoUser) {
         initComponents();
         cbCitas = new CbCitas();
         cbCitas.llenarComboBoxEs(this);
         cbCitas.llenarComboBoxRe(this);
         cbCitas.llenarComboBoxSer(this);
+        setIdUsuario(idUser);
+        setIdTipoUser(idTipoUser);
         mCitas = new mCitas();
         cCitas = new cCitas(mCitas, this, cbCitas);
         init();
     }
 
-        private void init() {
+    private void init() {
 
         txtSearch.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Buscar cita");
         txtPlaca.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Placa del vehiculo");
         txtMecanico.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Usuario del mecanico");
+
+        if (idTipoUser == 2) {
+            ValidarCeldasMec();
+        } else {
+            ValidarCeldas();
+        }
     }
-    
+
+    public void setIdUsuario(int idUser) {
+        this.idUser = idUser;
+    }
+
+    public int getIdUsuario() {
+        return idUser;
+    }
+
+    public void setIdTipoUser(int idTipoUser) {
+        this.idTipoUser = idTipoUser;
+    }
+
+    public int getIdTipoUser() {
+        return idTipoUser;
+    }
+
+    private void ValidarCeldas() {
+        int filaSeleccionada = tbCitas.getSelectedRow();
+        if (filaSeleccionada >= 0) {
+            date.setEnabled(false);
+            txtMecanico.setEnabled(false);
+            txtPlaca.setEnabled(false);
+            cbServicio.setEnabled(false);
+            Estado.setEnabled(true);
+            Repuesto.setEnabled(false);
+            btnRegistrar.setEnabled(false);
+        } else {
+            date.setEnabled(true);
+            txtMecanico.setEnabled(true);
+            txtPlaca.setEnabled(true);
+            cbServicio.setEnabled(true);
+            Estado.setEnabled(true);
+            Repuesto.setEnabled(true);
+        }
+    }
+
+    private void ValidarCeldasMec() {
+        int filaSeleccionada = tbCitas.getSelectedRow();
+        if (filaSeleccionada >= 0) {
+            date.setEnabled(false);
+            txtMecanico.setEnabled(false);
+            txtPlaca.setEnabled(false);
+            cbServicio.setEnabled(false);
+            Estado.setEnabled(true);
+            Repuesto.setEnabled(false);
+            btnRegistrar.setVisible(false);
+        } else {
+            date.setEnabled(false);
+            txtMecanico.setEnabled(false);
+            txtPlaca.setEnabled(false);
+            cbServicio.setEnabled(false);
+            Estado.setEnabled(true);
+            Repuesto.setEnabled(false);
+            btnRegistrar.setVisible(false);
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -133,12 +201,16 @@ public class pnlCitas extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbCitas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbCitasMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbCitas);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 900, 190));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Buscar:");
         add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
         add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 440, 39));
@@ -149,6 +221,14 @@ public class pnlCitas extends javax.swing.JPanel {
         btnActua.setText("Actualizar cita");
         add(btnActua, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 253, 132, 41));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tbCitasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbCitasMouseClicked
+        if (idTipoUser == 1) {
+            ValidarCeldas();
+        } else if (idTipoUser == 2) {
+            ValidarCeldasMec();
+        }
+    }//GEN-LAST:event_tbCitasMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

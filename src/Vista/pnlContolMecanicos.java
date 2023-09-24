@@ -29,11 +29,13 @@ public class pnlContolMecanicos extends javax.swing.JPanel {
     private cUsuarioM controladorUsuario;
 
     private int idUser;
+    private int idTipoUser;
 
-    public pnlContolMecanicos(int idUser) {
+    public pnlContolMecanicos(int idUser, int idTipoUser) {
         initComponents();
         init();
         setIdUsuario(idUser);
+        setIdTipoUser(idTipoUser);
         modeloUsuario = new mUsuario();
         controladorUsuario = new cUsuarioM(this, modeloUsuario);
         modeloMecanicos = new mMecanicos();
@@ -55,8 +57,8 @@ public class pnlContolMecanicos extends javax.swing.JPanel {
         txtDirec.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Dirección");
         txtDui.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "DUI");
         txtSearch.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Buscar un mecanico");
-        
-        
+
+        labelIDUser.setVisible(false);
 
     }
 
@@ -66,6 +68,14 @@ public class pnlContolMecanicos extends javax.swing.JPanel {
 
     public int getIdUsuario() {
         return idUser;
+    }
+
+    public void setIdTipoUser(int idTipoUser) {
+        this.idTipoUser = idTipoUser;
+    }
+
+    public int getIdTipoUser() {
+        return idTipoUser;
     }
 
     /**

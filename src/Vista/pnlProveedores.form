@@ -32,8 +32,7 @@
                       <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                           <Component id="btnEliminar" alignment="1" max="32767" attributes="0"/>
-                          <Component id="btnRegistrar" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btnActualizar" alignment="1" pref="160" max="32767" attributes="0"/>
+                          <Component id="btnRegistrar" alignment="0" pref="160" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -49,21 +48,17 @@
                   <Component id="txtSearch" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
                   <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
-                      <Component id="pLogin" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="101" max="-2" attributes="0"/>
                       <Component id="btnRegistrar" min="-2" pref="45" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                      <Component id="btnEliminar" min="-2" pref="45" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btnActualizar" min="-2" pref="45" max="-2" attributes="0"/>
+                      <Component id="btnEliminar" min="-2" pref="45" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="pLogin" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="83" max="32767" attributes="0"/>
+              <EmptySpace pref="104" max="32767" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="210" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
           </Group>
@@ -82,14 +77,6 @@
     <Component class="javax.swing.JButton" name="btnEliminar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Eliminar proveedor"/>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-      </AuxValues>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnActualizar">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Actualizar proveedor"/>
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>

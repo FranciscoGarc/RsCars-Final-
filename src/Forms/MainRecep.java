@@ -77,11 +77,11 @@ public class MainRecep extends JLayeredPane {
             if (index == 0) {
                 Application.showFormRecep(new pnlHome());
             } else if (index == 1) {
-                Application.showFormRecep(new pnlControlClientes());
+                Application.showFormRecep(new pnlControlClientes(getIdUsuario(),getIdTipoUser()));
             } else if (index == 2) {
                 Application.showFormRecep(new pnlRegistrarVeh());
             } else if (index == 3) {
-                Application.showFormRecep(new pnlCitas());
+                Application.showFormRecep(new pnlCitas(getIdUsuario(),getIdTipoUser()));
             } else if (index == 4) {
                 Application.logout();
             } else {

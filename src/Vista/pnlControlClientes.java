@@ -36,14 +36,19 @@ public class pnlControlClientes extends javax.swing.JPanel {
     private mUsuario modeloUsuario;
     private cUsuario controladorUsuario;
 
+    private int idUser;
+    private int idTipoUser;
+
     /**
      * Creates new form pnlControlClientes
      */
-    public pnlControlClientes() {
+    public pnlControlClientes(int idUser, int idTipoUser) {
         initComponents();
         modeloUsuario = new mUsuario();
         controladorUsuario = new cUsuario(this, modeloUsuario);
         modeloCliente = new mCliente();
+        setIdUsuario(idUser);
+        setIdTipoUser(idTipoUser);
         controladorCliente = new cCliente(this, modeloCliente);
         init();
 
@@ -63,6 +68,43 @@ public class pnlControlClientes extends javax.swing.JPanel {
         txtDirec.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Dirección");
         txtDui.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "DUI");
         txtSearch.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Buscar un cliente");
+
+        if (idTipoUser == 1) {
+            //Ningun cambio
+        } else if (idTipoUser == 2 || idTipoUser == 3) {
+            btnActualizar.setVisible(false);
+            btnAgregarUsuario.setVisible(false);
+            btnEliminar.setVisible(false);
+            btnRegistrar.setVisible(false);
+            txtUser.setEnabled(false);
+            txtContra.setEnabled(false);
+            txtCorreo.setEnabled(false);
+            txtApe.setEnabled(false);
+            txtTel.setEnabled(false);
+            txtDirec.setEnabled(false);
+            txtDui.setEnabled(false);
+        } else if (idTipoUser == 3) {
+            btnActualizar.setVisible(false);
+            btnAgregarUsuario.setVisible(true);
+            btnEliminar.setVisible(false);
+            btnRegistrar.setVisible(true);
+        }
+    }
+
+    public void setIdUsuario(int idUser) {
+        this.idUser = idUser;
+    }
+
+    public int getIdUsuario() {
+        return idUser;
+    }
+
+    public void setIdTipoUser(int idTipoUser) {
+        this.idTipoUser = idTipoUser;
+    }
+
+    public int getIdTipoUser() {
+        return idTipoUser;
     }
 
     /**

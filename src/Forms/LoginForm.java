@@ -302,7 +302,6 @@ public class LoginForm extends javax.swing.JPanel {
 
                 rs.close();
 
-                this.dispose();
             } else {
                 Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_CENTER, "No se encontro");
             }

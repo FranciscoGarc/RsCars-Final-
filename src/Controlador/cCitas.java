@@ -36,30 +36,64 @@ public class cCitas implements ActionListener, MouseListener {
     private pnlCitas vistaCitas;
     private CbCitas modeloCbCitas;
 
+    private int idUser;
+    private int idTipoUser;
+
     public cCitas(mCitas modelCitas, pnlCitas vistCitas, CbCitas modeCbCitas) {
         this.modeloCitas = modelCitas;
         this.vistaCitas = vistCitas;
         this.modeloCbCitas = modeCbCitas;
         this.vistaCitas.btnRegistrar.addActionListener(this);
         this.vistaCitas.btnActua.addActionListener(this);
-        vistaCitas.txtSearch.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                buscarDatos();
-            }
+        this.idTipoUser = vistCitas.getIdTipoUser();
+        this.idUser = vistCitas.getIdUsuario();
+        vistaCitas.txtMecanico.setDocument(new Valida(30, "[a-zA-Z0-9]*"));
+        vistaCitas.txtPlaca.setDocument(new Valida(6, "[0-9ABCDEF]*"));
+        setIdTipoUser(idTipoUser);
+        setIdUsuario(idUser);
 
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                buscarDatos();
-            }
+        if (idTipoUser == 2) {
+            vistaCitas.txtSearch.getDocument().addDocumentListener(new DocumentListener() {
+                @Override
+                public void insertUpdate(DocumentEvent e) {
+                    buscarDatosMeca();
+                }
 
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                buscarDatos();
-            }
-        });
+                @Override
+                public void removeUpdate(DocumentEvent e) {
+                    buscarDatosMeca();
+                }
 
-        cargarDatosTabla();
+                @Override
+                public void changedUpdate(DocumentEvent e) {
+                    buscarDatosMeca();
+                }
+            });
+        } else {
+            vistaCitas.txtSearch.getDocument().addDocumentListener(new DocumentListener() {
+                @Override
+                public void insertUpdate(DocumentEvent e) {
+                    buscarDatos();
+                }
+
+                @Override
+                public void removeUpdate(DocumentEvent e) {
+                    buscarDatos();
+                }
+
+                @Override
+                public void changedUpdate(DocumentEvent e) {
+                    buscarDatos();
+                }
+            });
+        }
+
+        if (idTipoUser == 2) {
+            cargarDatosTablaUser();
+        } else {
+            cargarDatosTabla();
+        }
+
     }
 
     private void cargarDatosTabla() {
@@ -67,9 +101,35 @@ public class cCitas implements ActionListener, MouseListener {
 
     }
 
+    private void cargarDatosTablaUser() {
+        modeloCitas.mostrarMecaPorID(idUser, vistaCitas.tbCitas);
+
+    }
+
+    public void setIdUsuario(int idUser) {
+        this.idUser = idUser;
+    }
+
+    public int getIdUsuario() {
+        return idUser;
+    }
+
+    public void setIdTipoUser(int idTipoUser) {
+        this.idTipoUser = idTipoUser;
+    }
+
+    public int getIdTipoUser() {
+        return idTipoUser;
+    }
+
     private void buscarDatos() {
         String textoBusqueda = vistaCitas.txtSearch.getText();
         modeloCitas.buscarEnTabla(textoBusqueda, vistaCitas.tbCitas);
+    }
+
+    private void buscarDatosMeca() {
+        String textoBusqueda = vistaCitas.txtSearch.getText();
+        modeloCitas.buscarEnTablaporId(textoBusqueda, idUser, vistaCitas.tbCitas);
     }
 
     private int obtenerIdMecanicoPorUsuario(String usuario) throws SQLException {
@@ -133,6 +193,11 @@ public class cCitas implements ActionListener, MouseListener {
             String idEstado = vistaCitas.Estado.getSelectedItem().toString();
             String idMeca = vistaCitas.txtMecanico.getText();
             Date fechaSeleccionada = vistaCitas.date.getDatoFecha();
+
+            if (idVehi.isEmpty() || idSer.isEmpty() || idRepuesto.isEmpty() || idEstado.isEmpty() || idMeca.isEmpty() || fechaSeleccionada == null) {
+                JOptionPane.showMessageDialog(vistaCitas, "Todos los campos deben estar llenos.", "Error", JOptionPane.ERROR_MESSAGE);
+                return; // Terminar la función si hay campos vacíos
+            }
             // Verificar si la fecha seleccionada es nula
             if (fechaSeleccionada == null) {
                 JOptionPane.showMessageDialog(vistaCitas, "La fecha seleccionada no puede ser nula.");
@@ -188,24 +253,51 @@ public class cCitas implements ActionListener, MouseListener {
         }
 
         if (e.getSource() == vistaCitas.btnActua) {
-            int filaSeleccionada = vistaCitas.tbCitas.getSelectedRow();
+            if (idTipoUser == 2) {
+                int filaSeleccionada = vistaCitas.tbCitas.getSelectedRow();
 
-            if (filaSeleccionada >= 0) {
-                int idCita = Integer.parseInt(vistaCitas.tbCitas.getValueAt(filaSeleccionada, 0).toString());
-                String idEstado = vistaCitas.Estado.getSelectedItem().toString();
+                if (filaSeleccionada >= 0) {
+                    int idCita = Integer.parseInt(vistaCitas.tbCitas.getValueAt(filaSeleccionada, 0).toString());
+                    String idEstado = vistaCitas.Estado.getSelectedItem().toString();
 
-                modeloCbCitas.setEstado(idEstado);
-                modeloCitas.setIdCita(idCita);
+                    modeloCbCitas.setEstado(idEstado);
+                    modeloCitas.setIdCita(idCita);
 
-                modeloCbCitas.traerIdDeTbEstado(modeloCitas, modeloCbCitas);
-                modeloCitas.ActCi(modeloCitas, modeloCbCitas);
+                    modeloCbCitas.traerIdDeTbEstado(modeloCitas, modeloCbCitas);
 
-                JOptionPane.showMessageDialog(vistaCitas, "Cita actualizada");
-                limpiarCamposTexto();
-                cargarDatosTabla();
+                    if (modeloCitas.ActCi(modeloCitas, modeloCbCitas)) {
+                        JOptionPane.showMessageDialog(vistaCitas, "Cita actualizada");
+                        limpiarCamposTexto();
+                        cargarDatosTablaUser();
+                    } else {
+                        JOptionPane.showMessageDialog(vistaCitas, "ERORR");
+                    }
 
+                } else {
+                    JOptionPane.showMessageDialog(vistaCitas, "Debe seleccionar una cita en la tabla.");
+                }
             } else {
-                JOptionPane.showMessageDialog(vistaCitas, "Debe seleccionar una cita en la tabla.");
+                int filaSeleccionada = vistaCitas.tbCitas.getSelectedRow();
+
+                if (filaSeleccionada >= 0) {
+                    int idCita = Integer.parseInt(vistaCitas.tbCitas.getValueAt(filaSeleccionada, 0).toString());
+                    String idEstado = vistaCitas.Estado.getSelectedItem().toString();
+
+                    modeloCbCitas.setEstado(idEstado);
+                    modeloCitas.setIdCita(idCita);
+
+                    modeloCbCitas.traerIdDeTbEstado(modeloCitas, modeloCbCitas);
+                    if (modeloCitas.ActCi(modeloCitas, modeloCbCitas)) {
+                        JOptionPane.showMessageDialog(vistaCitas, "Cita actualizada");
+                        limpiarCamposTexto();
+                        cargarDatosTabla();
+                    } else {
+                        JOptionPane.showMessageDialog(vistaCitas, "ERORR");
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(vistaCitas, "Debe seleccionar una cita en la tabla.");
+                }
             }
         }
     }

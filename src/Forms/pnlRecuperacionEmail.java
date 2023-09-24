@@ -414,7 +414,7 @@ public class pnlRecuperacionEmail extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pBgLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
+                .addGap(15, 15, 15))
         );
         pBgLayout.setVerticalGroup(
             pBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -432,9 +432,9 @@ public class pnlRecuperacionEmail extends javax.swing.JPanel {
                     .addGroup(pBgLayout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
+                .addGap(61, 61, 61)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(108, 108, 108))
+                .addContainerGap(129, Short.MAX_VALUE))
         );
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());

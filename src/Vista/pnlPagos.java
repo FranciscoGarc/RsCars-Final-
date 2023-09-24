@@ -127,7 +127,6 @@ public class pnlPagos extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tbPagos);
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Buscar:");
 
         btnRegistrar.setText("Agregar pago");

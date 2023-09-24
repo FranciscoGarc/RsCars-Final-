@@ -114,12 +114,8 @@ public class mCitas {
             actCliente.executeUpdate();
             return true;
         } catch (SQLException ex) {
-            if (ex.getErrorCode() == -999) {
-                System.out.println("Error: Stock insuficiente");
-            } else {
-                // Otro tipo de error
-                ex.printStackTrace();
-            }
+            // Otro tipo de error
+            ex.printStackTrace();
         }
         return false;
     }
@@ -180,6 +176,80 @@ public class mCitas {
             for (int i = 1; i <= 5; i++) {
                 statement.setString(i, "%" + criterio + "%");
             }
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                modelo.addRow(new Object[]{rs.getInt("idcita"), rs.getString("fechaHora"), rs.getString("nombre"), rs.getString("apellido"), rs.getString("dui"), rs.getString("descripcion_repuesto"), rs.getString("descripcion_servicio"), rs.getString("estado"), rs.getString("marca"), rs.getString("modelo"), rs.getString("placa")});
+            }
+            conexion.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }
+    }
+
+    public void buscarEnTablaporId(String criterio, int idUser, JTable tbDatosCl) {
+        DefaultTableModel modelo = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Hacemos que todas las celdas no sean editables
+            }
+        };
+        modelo.setColumnIdentifiers(new Object[]{"ID Cita", "Fecha y Hora", "Nombre Mecánico", "Apellido Mecánico", "DUI", "Descripción Repuesto", "Descripción Servicio", "Estado", "Marca Vehículo", "Modelo Vehículo", "Placa Vehículo"});
+        tbDatosCl.setModel(modelo);
+
+        try {
+            Connection conexion = conx.getConexion();
+            String sql = "SELECT C.idcita, C.fechaHora, M.nombre, M.apellido, M.dui, R.descripción AS descripcion_repuesto, S.descripcion AS descripcion_servicio, E.estado, V.marca, V.modelo, V.placa "
+                    + "FROM tbCitas C "
+                    + "JOIN tbMecanicos M ON C.idMecanico = M.idMecanico "
+                    + "LEFT JOIN tbRepuestos R ON C.idRepuesto = R.idRepuesto "
+                    + "LEFT JOIN tbServicios S ON C.idServicio = S.idServicio "
+                    + "JOIN tbVehiculos V ON C.idVehiculo = V.idVehiculo "
+                    + "JOIN tbUsuarios U ON M.idUsuario = U.idUsuario "
+                    + "JOIN tbEstadoCita E ON C.idEstado = E.idEstado "
+                    + "WHERE V.placa LIKE ? OR E.estado LIKE ? OR S.descripcion LIKE ? OR R.descripción LIKE ? OR M.nombre LIKE ?"
+                    + "AND M.idUsuario = ?";
+
+            PreparedStatement statement = conexion.prepareStatement(sql);
+            for (int i = 1; i <= 5; i++) {
+                statement.setString(i, "%" + criterio + "%");
+                statement.setInt(6, idMecanico);
+            }
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                modelo.addRow(new Object[]{rs.getInt("idcita"), rs.getString("fechaHora"), rs.getString("nombre"), rs.getString("apellido"), rs.getString("dui"), rs.getString("descripcion_repuesto"), rs.getString("descripcion_servicio"), rs.getString("estado"), rs.getString("marca"), rs.getString("modelo"), rs.getString("placa")});
+            }
+            conexion.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }
+    }
+
+    public void mostrarMecaPorID(int idMecanico, JTable tbDatosCl) {
+        DefaultTableModel modelo = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Hacemos que todas las celdas no sean editables
+            }
+        };
+        modelo.setColumnIdentifiers(new Object[]{"ID Cita", "Fecha y Hora", "Nombre Mecánico", "Apellido Mecánico", "DUI", "Descripción Repuesto", "Descripción Servicio", "Estado", "Marca Vehículo", "Modelo Vehículo", "Placa Vehículo"});
+        tbDatosCl.setModel(modelo);
+
+        try {
+            Connection conexion = conx.getConexion();
+            String sql = "SELECT C.idcita, C.fechaHora, M.nombre, M.apellido, M.dui, R.descripción AS descripcion_repuesto, S.descripcion AS descripcion_servicio, E.estado, V.marca, V.modelo, V.placa "
+                    + "FROM tbCitas C "
+                    + "JOIN tbMecanicos M ON C.idMecanico = M.idMecanico "
+                    + "LEFT JOIN tbRepuestos R ON C.idRepuesto = R.idRepuesto "
+                    + "LEFT JOIN tbServicios S ON C.idServicio = S.idServicio "
+                    + "JOIN tbVehiculos V ON C.idVehiculo = V.idVehiculo "
+                    + "JOIN tbEstadoCita E ON C.idEstado = E.idEstado "
+                    + "JOIN tbUsuarios U ON M.idUsuario = U.idUsuario "
+                    + "WHERE M.idUsuario = ?";
+
+            PreparedStatement statement = conexion.prepareStatement(sql);
+            statement.setInt(1, idMecanico);
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {

@@ -7,6 +7,7 @@ package Controlador;
 import Forms.MainForm;
 import Modelo.MostrarDatosTabla;
 import Modelo.Valida;
+import Modelo.conx;
 import Modelo.crypt;
 import Modelo.mCliente;
 import Modelo.mMecanicos;
@@ -18,6 +19,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.DocumentEvent;
@@ -35,6 +41,7 @@ public class cMecanicos implements ActionListener, MouseListener {
     private pnlContolMecanicos vistaMecanicos;
     private MostrarDatosTabla mostrarDatosTabla;
     private int idUser;
+    private int idTipoUser;
 
     public cMecanicos(pnlContolMecanicos vistaMecanicos, mMecanicos modeloMecanicos) {
         this.modeloMecanicos = modeloMecanicos;
@@ -58,6 +65,7 @@ public class cMecanicos implements ActionListener, MouseListener {
         this.vistaMecanicos.tbDatosCl.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                ValidarCeldas();
                 mostrarDatosEnCamposTexto();
             }
         });
@@ -77,7 +85,7 @@ public class cMecanicos implements ActionListener, MouseListener {
                 buscarDatos();
             }
         });
-
+        ValidarCeldas();
         cargarDatosTabla();
     }
 
@@ -92,6 +100,14 @@ public class cMecanicos implements ActionListener, MouseListener {
 
     public int getIdUsuario() {
         return idUser;
+    }
+
+    public void setIdTipoUser(int idTipoUser) {
+        this.idTipoUser = idTipoUser;
+    }
+
+    public int getIdTipoUser() {
+        return idTipoUser;
     }
 
     private boolean esNumero(String texto) {
@@ -126,8 +142,6 @@ public class cMecanicos implements ActionListener, MouseListener {
         String textoBusqueda = vistaMecanicos.txtSearch.getText();
         mostrarDatosTabla.buscarDatosEnTablaMecanicos(vistaMecanicos.tbDatosCl, textoBusqueda);
     }
-    
-    
 
     private void mostrarDatosEnCamposTexto() {
         int filaSeleccionada = vistaMecanicos.tbDatosCl.getSelectedRow();
@@ -182,45 +196,101 @@ public class cMecanicos implements ActionListener, MouseListener {
         vistaMecanicos.txtContra.setText("");
     }
 
+    private void ValidarCeldas() {
+        int filaSeleccionada = vistaMecanicos.tbDatosCl.getSelectedRow();
+        if (filaSeleccionada >= 0) {
+            vistaMecanicos.txtName.setEnabled(true);
+            vistaMecanicos.txtApe.setEnabled(true);
+            vistaMecanicos.txtDirec.setEnabled(true);
+            vistaMecanicos.txtDui.setEnabled(true);
+            vistaMecanicos.txtTel.setEnabled(true);
+            vistaMecanicos.btnRegistrar.setEnabled(true);
+            vistaMecanicos.btnAgregarUsuario.setEnabled(false);
+            vistaMecanicos.txtUser.setEnabled(false);
+            vistaMecanicos.btnActualizar.setEnabled(true);
+            vistaMecanicos.btnEliminar.setEnabled(true);
+        } else {
+            vistaMecanicos.txtName.setEnabled(false);
+            vistaMecanicos.txtApe.setEnabled(false);
+            vistaMecanicos.txtDirec.setEnabled(false);
+            vistaMecanicos.txtDui.setEnabled(false);
+            vistaMecanicos.txtTel.setEnabled(false);
+            vistaMecanicos.btnRegistrar.setEnabled(false);
+            vistaMecanicos.btnAgregarUsuario.setEnabled(true);
+            vistaMecanicos.btnActualizar.setEnabled(false);
+            vistaMecanicos.btnEliminar.setEnabled(false);
+        }
+    }
+
+    private int obtenerIdUserPorTabla(int codigo) throws SQLException {
+        // Realiza la consulta SQL para obtener el idProveedor basado en el código
+        String query = "SELECT idUsuario FROM tbMecanicos WHERE idUsuario = ?";
+        PreparedStatement preparedStatement = conx.getConexion().prepareStatement(query);
+        preparedStatement.setInt(1, codigo);
+
+        int idCita = -1;
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()) {
+            idCita = resultSet.getInt("idUsuario");
+        }
+
+        resultSet.close();
+        preparedStatement.close();
+
+        return idCita;
+    }
+
+    private boolean validarIdUsuario(int idUser) {
+        return idUser != -1;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == vistaMecanicos.btnRegistrar) {
             int filaSeleccionada = vistaMecanicos.tbDatosCl.getSelectedRow();
-            int idUser = getIdUsuario();
-            
-            actualizarLabelIDUser(idUser);
 
             if (filaSeleccionada >= 0) {
                 int idUsuario = Integer.parseInt(vistaMecanicos.tbDatosCl.getValueAt(filaSeleccionada, 0).toString());
-                int idUsere;
                 String nombre = vistaMecanicos.txtName.getText();
                 String apellido = vistaMecanicos.txtApe.getText();
                 String telefono = vistaMecanicos.txtTel.getText();
                 String direccion = vistaMecanicos.txtDirec.getText();
                 String dui = vistaMecanicos.txtDui.getText();
 
-                if (nombre.isEmpty() || apellido.isEmpty() || telefono.isEmpty() || direccion.isEmpty() || dui.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Llene todos los campos");
-                } else {
-                    // Llamar al método de validación de campos
-                    if (!validarCampos(telefono, dui)) {
-                        return; // Detener la ejecución si los campos no son válidos
+                try {
+                    int idUser = obtenerIdUserPorTabla(idUsuario);
+                    if (validarIdUsuario(idUser)) {
+                        JOptionPane.showMessageDialog(vistaMecanicos, "Ya existe un usuario registrado");
+                        return;  // Terminar la función si la validación falla
                     }
-                    modeloMecanicos.setIdUsuario(idUsuario);
-                    modeloMecanicos.setNombre(nombre);
-                    modeloMecanicos.setApellido(apellido);
-                    modeloMecanicos.setTelefono(telefono);
-                    modeloMecanicos.setDireccion(direccion);
-                    modeloMecanicos.setDui(dui);
 
-                    if (modeloMecanicos.AgregarMecanico(modeloMecanicos)) {
-                        JOptionPane.showMessageDialog(vistaMecanicos, "Mecanico registrado exitosamente.");
-                        cargarDatosTabla(); // Actualizar la tabla
-                        limpiarCamposTexto();
+                    if (nombre.isEmpty() || apellido.isEmpty() || telefono.isEmpty() || direccion.isEmpty() || dui.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Llene todos los campos");
                     } else {
-                        JOptionPane.showMessageDialog(vistaMecanicos, "Error al registrar el cliente.");
+                        // Llamar al método de validación de campos
+                        if (!validarCampos(telefono, dui)) {
+                            return; // Detener la ejecución si los campos no son válidos
+                        }
+                        modeloMecanicos.setIdUsuario(idUsuario);
+                        modeloMecanicos.setNombre(nombre);
+                        modeloMecanicos.setApellido(apellido);
+                        modeloMecanicos.setTelefono(telefono);
+                        modeloMecanicos.setDireccion(direccion);
+                        modeloMecanicos.setDui(dui);
+
+                        if (modeloMecanicos.AgregarMecanico(modeloMecanicos)) {
+                            JOptionPane.showMessageDialog(vistaMecanicos, "Mecanico registrado exitosamente.");
+                            cargarDatosTabla(); // Actualizar la tabla
+                            limpiarCamposTexto();
+                        } else {
+                            JOptionPane.showMessageDialog(vistaMecanicos, "Error al registrar el cliente.");
+                        }
                     }
+                } catch (SQLException ex) {
+                    Logger.getLogger(cMecanicos.class.getName()).log(Level.SEVERE, null, ex);
                 }
+
             } else {
                 Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Por favor, seleccione un usuario de la tabla");
             }

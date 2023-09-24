@@ -6,6 +6,7 @@ package Controlador;
 
 import Modelo.MostrarDatosTabla;
 import Modelo.Valida;
+import Modelo.conx;
 import Modelo.crypt;
 import Modelo.mContadores;
 import Modelo.mUsuario;
@@ -15,6 +16,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
@@ -46,16 +49,17 @@ public class cContadores implements ActionListener, MouseListener {
         this.vistaContadores.btnActualizar.addActionListener(this);
         this.vistaContadores.btnEliminar.addActionListener(this);
         this.mostrarDatosTabla = new MostrarDatosTabla();
-        vistaContadores.txtName.setDocument(new Valida(30,  "[a-zA-Z áÁéÉíÍóÓúÚüÜ]*"));
-        vistaContadores.txtApe.setDocument(new Valida(30,  "[a-zA-Z áÁéÉíÍóÓúÚüÜ]*"));
+        vistaContadores.txtName.setDocument(new Valida(30, "[a-zA-Z áÁéÉíÍóÓúÚüÜ]*"));
+        vistaContadores.txtApe.setDocument(new Valida(30, "[a-zA-Z áÁéÉíÍóÓúÚüÜ]*"));
         vistaContadores.txtUser.setDocument(new Valida(30, "[a-zA-Z0-9]*"));
         vistaContadores.txtContra.setDocument(new Valida(12, "[a-zA-Z0-9]*"));
-        vistaContadores.txtDirec.setDocument(new Valida(30,  "[a-zA-Z0-9 áÁéÉíÍóÓúÚüÜ]*"));
+        vistaContadores.txtDirec.setDocument(new Valida(30, "[a-zA-Z0-9 áÁéÉíÍóÓúÚüÜ]*"));
         vistaContadores.txtTel.setDocument(new Valida(8, "[0-9]*"));
         vistaContadores.txtDui.setDocument(new Valida(9, "[0-9]*"));
         this.vistaContadores.tbDatosCl.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                ValidarCeldas();
                 mostrarDatosEnCamposTexto();
             }
         });
@@ -75,7 +79,7 @@ public class cContadores implements ActionListener, MouseListener {
                 buscarDatos();
             }
         });
-
+        ValidarCeldas();
         cargarDatosTabla();
     }
 
@@ -169,6 +173,55 @@ public class cContadores implements ActionListener, MouseListener {
         vistaContadores.txtContra.setText("");
     }
 
+    private int obtenerIdUserPorTabla(int codigo) throws SQLException {
+        // Realiza la consulta SQL para obtener el idProveedor basado en el código
+        String query = "SELECT idUsuario FROM tbContadores WHERE idUsuario = ?";
+        PreparedStatement preparedStatement = conx.getConexion().prepareStatement(query);
+        preparedStatement.setInt(1, codigo);
+
+        int idCita = -1;
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()) {
+            idCita = resultSet.getInt("idUsuario");
+        }
+
+        resultSet.close();
+        preparedStatement.close();
+
+        return idCita;
+    }
+
+    private boolean validarIdUsuario(int idUser) {
+        return idUser != -1;
+    }
+
+    private void ValidarCeldas() {
+        int filaSeleccionada = vistaContadores.tbDatosCl.getSelectedRow();
+        if (filaSeleccionada >= 0) {
+            vistaContadores.txtName.setEnabled(true);
+            vistaContadores.txtApe.setEnabled(true);
+            vistaContadores.txtDirec.setEnabled(true);
+            vistaContadores.txtDui.setEnabled(true);
+            vistaContadores.txtTel.setEnabled(true);
+            vistaContadores.btnRegistrar.setEnabled(true);
+            vistaContadores.btnAgregarUsuario.setEnabled(false);
+            vistaContadores.txtUser.setEnabled(false);
+            vistaContadores.btnActualizar.setEnabled(true);
+            vistaContadores.btnEliminar.setEnabled(true);
+        } else {
+            vistaContadores.txtName.setEnabled(false);
+            vistaContadores.txtApe.setEnabled(false);
+            vistaContadores.txtDirec.setEnabled(false);
+            vistaContadores.txtDui.setEnabled(false);
+            vistaContadores.txtTel.setEnabled(false);
+            vistaContadores.btnRegistrar.setEnabled(false);
+            vistaContadores.btnAgregarUsuario.setEnabled(true);
+            vistaContadores.btnActualizar.setEnabled(false);
+            vistaContadores.btnEliminar.setEnabled(false);
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == vistaContadores.btnRegistrar) {
@@ -182,28 +235,40 @@ public class cContadores implements ActionListener, MouseListener {
                 String direccion = vistaContadores.txtDirec.getText();
                 String dui = vistaContadores.txtDui.getText();
 
-                if (nombre.isEmpty() || apellido.isEmpty() || telefono.isEmpty() || direccion.isEmpty() || dui.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Llene todos los campos");
-                } else {
-                    // Llamar al método de validación de campos
-                    if (!validarCampos(telefono, dui)) {
-                        return; // Detener la ejecución si los campos no son válidos
-                    }
-                    modeloContadores.setIdUsuario(idUsuario);
-                    modeloContadores.setNombre(nombre);
-                    modeloContadores.setApellido(apellido);
-                    modeloContadores.setTelefono(telefono);
-                    modeloContadores.setDireccion(direccion);
-                    modeloContadores.setDui(dui);
+                try {
+                    int idUser = obtenerIdUserPorTabla(idUsuario);
+                    if (validarIdUsuario(idUser)) {
+                        JOptionPane.showMessageDialog(vistaContadores, "Ya existe un usuario registrado");
+                        return;  // Terminar la función si la validación falla
 
-                    if (modeloContadores.AgregarCliente(modeloContadores)) {
-                        JOptionPane.showMessageDialog(vistaContadores, "Contador registrado exitosamente.");
-                        cargarDatosTabla(); // Actualizar la tabla
-                        limpiarCamposTexto();
-                    } else {
-                        JOptionPane.showMessageDialog(vistaContadores, "Error al registrar el cliente.");
                     }
+
+                    if (nombre.isEmpty() || apellido.isEmpty() || telefono.isEmpty() || direccion.isEmpty() || dui.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Llene todos los campos");
+                    } else {
+                        // Llamar al método de validación de campos
+                        if (!validarCampos(telefono, dui)) {
+                            return; // Detener la ejecución si los campos no son válidos
+                        }
+                        modeloContadores.setIdUsuario(idUsuario);
+                        modeloContadores.setNombre(nombre);
+                        modeloContadores.setApellido(apellido);
+                        modeloContadores.setTelefono(telefono);
+                        modeloContadores.setDireccion(direccion);
+                        modeloContadores.setDui(dui);
+
+                        if (modeloContadores.AgregarCliente(modeloContadores)) {
+                            JOptionPane.showMessageDialog(vistaContadores, "Contador registrado exitosamente.");
+                            cargarDatosTabla(); // Actualizar la tabla
+                            limpiarCamposTexto();
+                        } else {
+                            JOptionPane.showMessageDialog(vistaContadores, "Error al registrar el contador.");
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(cContadores.class.getName()).log(Level.SEVERE, null, ex);
                 }
+
             } else {
                 Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Por favor, seleccione un usuario de la tabla");
             }

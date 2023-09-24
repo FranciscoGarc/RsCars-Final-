@@ -19,7 +19,6 @@ import Aplicacion.Application;
 import Menu.Cont.MenuCont;
 import Menu.Cont.MenuAction;
 import Vista.pnlCitas;
-import Vista.pnlControlCitas;
 import Vista.pnlControlClientes;
 import Vista.pnlHome;
 import Vista.pnlPagos;
@@ -80,7 +79,7 @@ public class MainCont extends JLayeredPane {
             if (index == 0) {
                 Application.showFormCont(new pnlHome());
             } else if (index == 1) {
-                Application.showFormCont(new pnlCitas());
+                Application.showFormCont(new pnlCitas(getIdUsuario(),getIdTipoUser()));
             } else if (index == 2) {
                 Application.showFormCont(new pnlPagos());
             } else if (index == 3) {

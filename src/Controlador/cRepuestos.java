@@ -42,7 +42,10 @@ public class cRepuestos implements ActionListener, MouseListener {
         this.vistaRepuestos = vistaRepuestos;
         this.vistaRepuestos.btnRegistrar.addActionListener(this);
         this.vistaRepuestos.btnEliminar.addActionListener(this);
-        this.vistaRepuestos.btnActualizar.addActionListener(this);
+        vistaRepuestos.txtCodeProv.setDocument(new Valida(4, "[0-9]*"));
+        vistaRepuestos.txtStock.setDocument(new Valida(6, "[0-9]*"));
+        vistaRepuestos.txtPrecio.setDocument(new Valida(7, "[0-9].*"));
+        vistaRepuestos.txtDesc.setDocument(new Valida(20, "[a-zA-Z]*"));
         vistaRepuestos.txtSearch.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -107,17 +110,32 @@ public class cRepuestos implements ActionListener, MouseListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == vistaRepuestos.btnRegistrar) {
             try {
+                if (vistaRepuestos.txtStock.getText().length() < 1 || vistaRepuestos.txtPrecio.getText().length() < 2) {
+                    JOptionPane.showMessageDialog(vistaRepuestos, "Campos vacios", "Error", JOptionPane.ERROR_MESSAGE);
+                    return; // Terminar la función si hay campos vacíos
+                }
+
                 String desc = vistaRepuestos.txtDesc.getText();
                 String montoTexto = vistaRepuestos.txtPrecio.getText();
                 BigDecimal montoPagado;
                 String idProv = vistaRepuestos.txtCodeProv.getText();
                 int stock = Integer.parseInt(vistaRepuestos.txtStock.getText());
-                //int idProveedor = Integer.parseInt(vistaRepuestos.txtPrecio.getText());
-
                 montoPagado = new BigDecimal(montoTexto);
+                try {
+                    montoPagado = new BigDecimal(montoTexto);
+                } catch (NumberFormatException ec) {
+                    JOptionPane.showMessageDialog(vistaRepuestos, "El monto ingresado no es válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return; // Terminar la función si el monto no es válido
+                }
                 int idProveedor = obtenerIdProvPorCode(idProv);
+
+                if (desc.isEmpty() || montoTexto.isEmpty() || idProv.isEmpty()) {
+                    JOptionPane.showMessageDialog(vistaRepuestos, "Todos los campos deben estar llenos.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return; // Terminar la función si hay campos vacíos
+                }
+
                 if (!validarIdProv(idProveedor)) {
-                    JOptionPane.showMessageDialog(vistaRepuestos, "El idVehiculo no es válido.");
+                    JOptionPane.showMessageDialog(vistaRepuestos, "No se ha a encontrado ningun proveedor");
                     return;  // Terminar la función si la validación falla
                 }
 
@@ -125,11 +143,14 @@ public class cRepuestos implements ActionListener, MouseListener {
                 modeloRepuestos.setIdProveedor(idProveedor);
                 modeloRepuestos.setPrecio(montoPagado);
                 modeloRepuestos.setStock(stock);
-                modeloRepuestos.AgRe(modeloRepuestos);
 
-                JOptionPane.showMessageDialog(vistaRepuestos, "Repuesto registrado");
-                limpiarCamposTexto();
-                cargarDatosTabla();
+                if (modeloRepuestos.AgRe(modeloRepuestos)) {
+                    JOptionPane.showMessageDialog(vistaRepuestos, "Repuesto registrado");
+                    limpiarCamposTexto();
+                    cargarDatosTabla();
+                } else {
+                    JOptionPane.showMessageDialog(vistaRepuestos, "Error al registrar");
+                }
 
             } catch (SQLException ex) {
                 Logger.getLogger(cRepuestos.class.getName()).log(Level.SEVERE, null, ex);

@@ -10,11 +10,14 @@ import Modelo.mCliente;
 import Modelo.mUsuario;
 import Vista.pnlControlClientes;
 import Modelo.Valida;
+import Modelo.conx;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
@@ -38,6 +41,9 @@ public class cCliente implements ActionListener, MouseListener {
     private pnlControlClientes vistaClientes;
     private MostrarDatosTabla mostrarDatosTabla;
 
+    private int idUser;
+    private int idTipoUser;
+
     public cCliente(pnlControlClientes vistasClientes, mCliente modeloCliente) {
         this.modeloCliente = modeloCliente;
         this.vistaClientes = vistasClientes;
@@ -53,12 +59,33 @@ public class cCliente implements ActionListener, MouseListener {
         vistaClientes.txtDirec.setDocument(new Valida(30, "[a-zA-Z0-9 áÁéÉíÍóÓúÚüÜ]*"));
         vistaClientes.txtTel.setDocument(new Valida(8, "[0-9]*"));
         vistaClientes.txtDui.setDocument(new Valida(9, "[0-9]*"));
-        this.vistaClientes.tbDatosCl.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                mostrarDatosEnCamposTexto();
-            }
-        });
+        this.idTipoUser = vistasClientes.getIdTipoUser();
+        setIdTipoUser(idTipoUser);
+        if (idTipoUser == 2) {
+            this.vistaClientes.tbDatosCl.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    mostrarDatosEnCamposTexto();
+                }
+            });
+        } else if (idTipoUser == 4) {
+            this.vistaClientes.tbDatosCl.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    mostrarDatosEnCamposTexto();
+                    ValidarCeldasRecep();
+                }
+            });
+        } else {
+            this.vistaClientes.tbDatosCl.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    mostrarDatosEnCamposTexto();
+                    ValidarCeldas();
+                }
+            });
+        }
+
         vistaClientes.txtSearch.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -76,7 +103,29 @@ public class cCliente implements ActionListener, MouseListener {
             }
         });
 
-        cargarDatosTabla();
+        if (idTipoUser == 4) {
+            ValidarCeldasRecep();
+            cargarDatosTabla();
+        } else {
+            ValidarCeldas();
+            cargarDatosTabla();
+        }
+    }
+
+    public void setIdUsuario(int idUser) {
+        this.idUser = idUser;
+    }
+
+    public int getIdUsuario() {
+        return idUser;
+    }
+
+    public void setIdTipoUser(int idTipoUser) {
+        this.idTipoUser = idTipoUser;
+    }
+
+    public int getIdTipoUser() {
+        return idTipoUser;
     }
 
     private void cargarDatosTabla() {
@@ -129,6 +178,58 @@ public class cCliente implements ActionListener, MouseListener {
         }
     }
 
+    private void ValidarCeldas() {
+        int filaSeleccionada = vistaClientes.tbDatosCl.getSelectedRow();
+        if (filaSeleccionada >= 0) {
+            vistaClientes.txtName.setEnabled(true);
+            vistaClientes.txtApe.setEnabled(true);
+            vistaClientes.txtDirec.setEnabled(true);
+            vistaClientes.txtDui.setEnabled(true);
+            vistaClientes.txtTel.setEnabled(true);
+            vistaClientes.btnRegistrar.setEnabled(true);
+            vistaClientes.btnAgregarUsuario.setEnabled(false);
+            vistaClientes.txtUser.setEnabled(false);
+            vistaClientes.btnActualizar.setEnabled(true);
+            vistaClientes.btnEliminar.setEnabled(true);
+        } else {
+            vistaClientes.txtName.setEnabled(false);
+            vistaClientes.txtApe.setEnabled(false);
+            vistaClientes.txtDirec.setEnabled(false);
+            vistaClientes.txtDui.setEnabled(false);
+            vistaClientes.txtTel.setEnabled(false);
+            vistaClientes.btnRegistrar.setEnabled(false);
+            vistaClientes.btnAgregarUsuario.setEnabled(true);
+            vistaClientes.btnActualizar.setEnabled(false);
+            vistaClientes.btnEliminar.setEnabled(false);
+        }
+    }
+
+    private void ValidarCeldasRecep() {
+        int filaSeleccionada = vistaClientes.tbDatosCl.getSelectedRow();
+        if (filaSeleccionada >= 0) {
+            vistaClientes.txtName.setEnabled(true);
+            vistaClientes.txtApe.setEnabled(true);
+            vistaClientes.txtDirec.setEnabled(true);
+            vistaClientes.txtDui.setEnabled(true);
+            vistaClientes.txtTel.setEnabled(true);
+            vistaClientes.btnRegistrar.setEnabled(true);
+            vistaClientes.btnAgregarUsuario.setEnabled(false);
+            vistaClientes.txtUser.setEnabled(false);
+            vistaClientes.btnActualizar.setVisible(false);
+            vistaClientes.btnEliminar.setVisible(false);
+        } else {
+            vistaClientes.txtName.setEnabled(false);
+            vistaClientes.txtApe.setEnabled(false);
+            vistaClientes.txtDirec.setEnabled(false);
+            vistaClientes.txtDui.setEnabled(false);
+            vistaClientes.txtTel.setEnabled(false);
+            vistaClientes.btnRegistrar.setEnabled(false);
+            vistaClientes.btnAgregarUsuario.setEnabled(true);
+            vistaClientes.btnActualizar.setVisible(false);
+            vistaClientes.btnEliminar.setVisible(false);
+        }
+    }
+
     private String getCellValueOrDefault(JTable table, int row, int col, String defaultValue) {
         Object value = table.getValueAt(row, col);
         return value != null ? value.toString() : defaultValue;
@@ -145,6 +246,29 @@ public class cCliente implements ActionListener, MouseListener {
         vistaClientes.txtContra.setText("");
     }
 
+    private int obtenerIdUserPorTabla(int codigo) throws SQLException {
+        // Realiza la consulta SQL para obtener el idProveedor basado en el código
+        String query = "SELECT idUsuario FROM tbClientes WHERE idUsuario = ?";
+        PreparedStatement preparedStatement = conx.getConexion().prepareStatement(query);
+        preparedStatement.setInt(1, codigo);
+
+        int idCita = -1;
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()) {
+            idCita = resultSet.getInt("idUsuario");
+        }
+
+        resultSet.close();
+        preparedStatement.close();
+
+        return idCita;
+    }
+
+    private boolean validarIdUsuario(int idUser) {
+        return idUser != -1;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == vistaClientes.btnRegistrar) {
@@ -158,24 +282,36 @@ public class cCliente implements ActionListener, MouseListener {
                 String direccion = vistaClientes.txtDirec.getText();
                 String dui = vistaClientes.txtDui.getText();
 
-                if (nombre.isEmpty() || apellido.isEmpty() || telefono.isEmpty() || direccion.isEmpty() || dui.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Llene todos los campos");
-                } else {
-                    modeloCliente.setIdUsuario(idUsuario);
-                    modeloCliente.setNombre(nombre);
-                    modeloCliente.setApellido(apellido);
-                    modeloCliente.setTelefono(telefono);
-                    modeloCliente.setDireccion(direccion);
-                    modeloCliente.setDui(dui);
+                try {
+                    int idUser = obtenerIdUserPorTabla(idUsuario);
+                    if (validarIdUsuario(idUser)) {
+                        JOptionPane.showMessageDialog(vistaClientes, "Ya existe un usuario registrado");
+                        return;  // Terminar la función si la validación falla
 
-                    if (modeloCliente.AgregarCliente(modeloCliente)) {
-                        JOptionPane.showMessageDialog(vistaClientes, "Cliente registrado exitosamente.");
-                        cargarDatosTabla(); // Actualizar la tabla
-                        limpiarCamposTexto();
-                    } else {
-                        JOptionPane.showMessageDialog(vistaClientes, "Error al registrar el cliente.");
                     }
+
+                    if (nombre.isEmpty() || apellido.isEmpty() || telefono.isEmpty() || direccion.isEmpty() || dui.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Llene todos los campos");
+                    } else {
+                        modeloCliente.setIdUsuario(idUsuario);
+                        modeloCliente.setNombre(nombre);
+                        modeloCliente.setApellido(apellido);
+                        modeloCliente.setTelefono(telefono);
+                        modeloCliente.setDireccion(direccion);
+                        modeloCliente.setDui(dui);
+
+                        if (modeloCliente.AgregarCliente(modeloCliente)) {
+                            JOptionPane.showMessageDialog(vistaClientes, "Cliente registrado exitosamente.");
+                            cargarDatosTabla(); // Actualizar la tabla
+                            limpiarCamposTexto();
+                        } else {
+                            JOptionPane.showMessageDialog(vistaClientes, "Error al registrar el cliente.");
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(cCliente.class.getName()).log(Level.SEVERE, null, ex);
                 }
+
             } else {
                 Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Por favor, seleccione un usuario de la tabla");
             }

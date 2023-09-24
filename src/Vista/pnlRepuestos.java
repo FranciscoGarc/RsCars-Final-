@@ -45,7 +45,6 @@ public class pnlRepuestos extends javax.swing.JPanel {
 
         btnRegistrar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        btnActualizar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbProducts = new javax.swing.JTable();
         pLogin = new com.k33ptoo.components.KGradientPanel();
@@ -59,8 +58,6 @@ public class pnlRepuestos extends javax.swing.JPanel {
         btnRegistrar.setText("Agregar producto");
 
         btnEliminar.setText("Eliminar producto");
-
-        btnActualizar.setText("Actualizar producto");
 
         tbProducts.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -140,9 +137,8 @@ public class pnlRepuestos extends javax.swing.JPanel {
                             .addComponent(pLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnRegistrar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                            .addComponent(btnRegistrar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(50, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -162,9 +158,7 @@ public class pnlRepuestos extends javax.swing.JPanel {
                         .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(71, 71, 71)))
+                        .addGap(134, 134, 134)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(34, Short.MAX_VALUE))
         );
@@ -172,7 +166,6 @@ public class pnlRepuestos extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JButton btnActualizar;
     public javax.swing.JButton btnEliminar;
     public javax.swing.JButton btnRegistrar;
     private javax.swing.JLabel jLabel9;
