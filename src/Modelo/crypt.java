@@ -20,7 +20,7 @@ public class crypt {
     // Función para encriptar la contraseña usando AES
     public static String encryptPassword(String password) {
         try {
-            MessageDigest sha = MessageDigest.getInstance("SHA-1");
+            MessageDigest sha = MessageDigest.getInstance("SHA-256");
             byte[] key = sha.digest(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
             key = java.util.Arrays.copyOf(key, 16); // Seleccionar solo los primeros 128 bits
 
@@ -40,7 +40,7 @@ public class crypt {
     // Función para desencriptar la contraseña usando AES
     public static String decryptPassword(String encryptedPassword) {
         try {
-            MessageDigest sha = MessageDigest.getInstance("SHA-1");
+            MessageDigest sha = MessageDigest.getInstance("SHA-256");
             byte[] key = sha.digest(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
             key = java.util.Arrays.copyOf(key, 16); // Seleccionar solo los primeros 128 bits
 
@@ -50,7 +50,7 @@ public class crypt {
 
             byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(encryptedPassword));
 
-            return new String(decryptedBytes);
+            return new String(decryptedBytes, StandardCharsets.UTF_8);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

@@ -146,7 +146,7 @@ public class cCliente implements ActionListener, MouseListener {
         if (filaSeleccionada >= 0 && filaSeleccionada < vistaClientes.tbDatosCl.getRowCount()) {
             int idUsuario = Integer.parseInt(vistaClientes.tbDatosCl.getValueAt(filaSeleccionada, 0).toString());
             String usuario = getCellValueOrDefault(vistaClientes.tbDatosCl, filaSeleccionada, 1, "");
-            String contraEncrypted = getCellValueOrDefault(vistaClientes.tbDatosCl, filaSeleccionada, 2, "");
+            //String contraEncrypted = getCellValueOrDefault(vistaClientes.tbDatosCl, filaSeleccionada, 2, "");
             String correo = getCellValueOrDefault(vistaClientes.tbDatosCl, filaSeleccionada, 3, "");
             int idCliente = Integer.parseInt(getCellValueOrDefault(vistaClientes.tbDatosCl, filaSeleccionada, 4, "0"));
             String nombre = getCellValueOrDefault(vistaClientes.tbDatosCl, filaSeleccionada, 5, "");
@@ -163,8 +163,8 @@ public class cCliente implements ActionListener, MouseListener {
             vistaClientes.txtDui.setText(dui);
             vistaClientes.txtCorreo.setText(correo);
             // Desencriptar y mostrar la contraseña en el campo de texto
-            String contraDesencriptada = crypt.decryptPassword(contraEncrypted);
-            vistaClientes.txtContra.setText(contraDesencriptada);
+            //String contraDesencriptada = crypt.decryptPassword(contraEncrypted);
+            //vistaClientes.txtContra.setText(contraDesencriptada);
         } else {
             // Si no hay filas seleccionadas o la selección es inválida, limpiamos los campos de texto.
             vistaClientes.txtUser.setText("");
@@ -198,7 +198,7 @@ public class cCliente implements ActionListener, MouseListener {
             vistaClientes.txtDui.setEnabled(false);
             vistaClientes.txtTel.setEnabled(false);
             vistaClientes.btnRegistrar.setEnabled(false);
-            vistaClientes.btnAgregarUsuario.setEnabled(true);
+            vistaClientes.btnAgregarUsuario.setEnabled(false);
             vistaClientes.btnActualizar.setEnabled(false);
             vistaClientes.btnEliminar.setEnabled(false);
         }
@@ -213,7 +213,7 @@ public class cCliente implements ActionListener, MouseListener {
             vistaClientes.txtDui.setEnabled(true);
             vistaClientes.txtTel.setEnabled(true);
             vistaClientes.btnRegistrar.setEnabled(true);
-            vistaClientes.btnAgregarUsuario.setEnabled(false);
+            vistaClientes.btnAgregarUsuario.setVisible(false);
             vistaClientes.txtUser.setEnabled(false);
             vistaClientes.btnActualizar.setVisible(false);
             vistaClientes.btnEliminar.setVisible(false);
@@ -223,8 +223,8 @@ public class cCliente implements ActionListener, MouseListener {
             vistaClientes.txtDirec.setEnabled(false);
             vistaClientes.txtDui.setEnabled(false);
             vistaClientes.txtTel.setEnabled(false);
-            vistaClientes.btnRegistrar.setEnabled(false);
-            vistaClientes.btnAgregarUsuario.setEnabled(true);
+            vistaClientes.btnRegistrar.setEnabled(true);
+            vistaClientes.btnAgregarUsuario.setVisible(false);
             vistaClientes.btnActualizar.setVisible(false);
             vistaClientes.btnEliminar.setVisible(false);
         }

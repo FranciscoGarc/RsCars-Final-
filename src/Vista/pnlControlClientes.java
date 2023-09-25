@@ -44,8 +44,8 @@ public class pnlControlClientes extends javax.swing.JPanel {
      */
     public pnlControlClientes(int idUser, int idTipoUser) {
         initComponents();
-        modeloUsuario = new mUsuario();
-        controladorUsuario = new cUsuario(this, modeloUsuario);
+        //modeloUsuario = new mUsuario();
+        //controladorUsuario = new cUsuario(this, modeloUsuario);
         modeloCliente = new mCliente();
         setIdUsuario(idUser);
         setIdTipoUser(idTipoUser);
@@ -70,7 +70,10 @@ public class pnlControlClientes extends javax.swing.JPanel {
         txtSearch.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Buscar un cliente");
 
         if (idTipoUser == 1) {
-            //Ningun cambio
+            btnAgregarUsuario.setVisible(false);
+            txtUser.setEnabled(false);
+            txtContra.setEnabled(false);
+            txtCorreo.setEnabled(false);
         } else if (idTipoUser == 2 || idTipoUser == 3) {
             btnActualizar.setVisible(false);
             btnAgregarUsuario.setVisible(false);
@@ -84,8 +87,11 @@ public class pnlControlClientes extends javax.swing.JPanel {
             txtDirec.setEnabled(false);
             txtDui.setEnabled(false);
         } else if (idTipoUser == 3) {
+            txtUser.setEnabled(false);
+            txtContra.setEnabled(false);
+            txtCorreo.setEnabled(false);
             btnActualizar.setVisible(false);
-            btnAgregarUsuario.setVisible(true);
+            btnAgregarUsuario.setVisible(false);
             btnEliminar.setVisible(false);
             btnRegistrar.setVisible(true);
         }

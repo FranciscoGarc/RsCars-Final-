@@ -41,7 +41,7 @@ public class cProveedores implements ActionListener, MouseListener {
         this.vistaProveedores.btnEliminar.addActionListener(this);
         vistaProveedores.txtCode.setDocument(new Valida(4, "[0-9]*"));
         vistaProveedores.txtTelefono.setDocument(new Valida(8, "[0-9]*"));
-        vistaProveedores.txtName.setDocument(new Valida(30, "[a-zA-Z]*"));
+        vistaProveedores.txtName.setDocument(new Valida(30, "[a-zA-Z ]*"));
 
         vistaProveedores.txtSearch.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -96,7 +96,7 @@ public class cProveedores implements ActionListener, MouseListener {
 
             String Nombre = vistaProveedores.txtName.getText();
             String Telefono = vistaProveedores.txtTelefono.getText();
-            String Coreeo = vistaProveedores.txtTelefono.getText();
+            String Coreeo = vistaProveedores.txtCorreo.getText();
             if (!isValidEmail(Coreeo)) {
                 JOptionPane.showMessageDialog(vistaProveedores, "Ingrese un correo valido", "Error", JOptionPane.ERROR_MESSAGE);
                 return;

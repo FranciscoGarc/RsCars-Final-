@@ -212,8 +212,8 @@ public class pnlCitas extends javax.swing.JPanel {
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel9.setText("Buscar:");
-        add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
-        add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 440, 39));
+        add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
+        add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, 440, 39));
 
         btnRegistrar.setText("Agregar cita");
         add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 153, 132, 41));
